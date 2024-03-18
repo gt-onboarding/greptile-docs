@@ -48,8 +48,19 @@
     {
       "group": "Get Started",
       "pages": ["introduction", "quickstart"]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/introduction",
+        "api-reference/get-session",
+        "api-reference/index",
+        "api-reference/get-repository",
+        "api-reference/query"
+      ]
     }
   ],
+  "openapi": ["openapi.yml"],
   "footerSocials": {
     "twitter": "https://twitter.com/greptileai",
     "github": "https://github.com/greptileai",

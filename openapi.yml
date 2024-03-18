@@ -1,0 +1,222 @@
+openapi: 3.0.0
+info:
+  title: Greptile API
+  version: '2.0'
+  description: API for accessing Greptile services including chat history retrieval, repository processing, and executing queries with streaming support.
+servers:
+  - url: 'https://api.greptile.com/v2/'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+    GitHubToken:
+      type: apiKey
+      in: header
+      name: X-GitHub-Token
+
+  schemas:
+    ChatLog:
+      type: object
+      properties:
+        userId:
+          type: string
+        timestamp:
+          type: string
+        sessionId:
+          type: string
+        chatLog:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              role:
+                type: string
+              sources:
+                type: array
+                items:
+                  type: object
+        repos:
+          type: array
+          items:
+            type: string
+        parentId:
+          type: string
+        title:
+          type: string
+
+    RepositoryRequest:
+      type: object
+      properties:
+        remote:
+          type: string
+          description: Supported values are "github" or "gitlab".
+        repository:
+          type: string
+          description: Repository identifier in "owner/repository" format.
+        branch:
+          type: string
+          description: Branch name. Optional, defaults to repository's default branch.
+        reload:
+          type: boolean
+          description: If false, won't reprocess if previously successful. Optional, default true.
+        notify:
+          type: boolean
+          description: Whether to notify the user upon completion. Optional, default true.
+
+    RepositoryResponse:
+      type: object
+      properties:
+        response:
+          type: string
+          description: Processing status message.
+
+    RepositoryInfo:
+      type: object
+      properties:
+        repository:
+          type: string
+        remote:
+          type: string
+        branch:
+          type: string
+        private:
+          type: boolean
+        status:
+          type: string
+        filesProcessed:
+          type: integer
+        numFiles:
+          type: integer
+        sampleQuestions:
+          type: array
+          items:
+            type: string
+        sha:
+          type: string
+
+    QueryRequest:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              content:
+                type: string
+              role:
+                type: string
+        repositories:
+          type: array
+          items:
+            type: object
+            properties:
+              remote:
+                type: string
+              branch:
+                type: string
+              name:
+                type: string
+        sessionId:
+          type: string
+        stream:
+          type: boolean
+          description: Optional, default false.
+
+    QueryResponse:
+      type: object
+      properties:
+        type:
+          type: string
+        message:
+          type: string
+
+paths:
+  /chats/{sessionId}:
+    get:
+      summary: Retrieve chat history for a given session.
+      security:
+        - ApiKeyAuth: []
+        - ApiKeyAuth: []
+          GitHubToken: []
+      parameters:
+        - in: path
+          name: sessionId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chat history retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatLog'
+
+  /repositories:
+    post:
+      summary: Process or reprocess a repository.
+      security:
+        - ApiKeyAuth: []
+          GitHubToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RepositoryRequest'
+      responses:
+        '200':
+          description: Repository processing started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepositoryResponse'
+
+  /repositories/{repositoryId}:
+    get:
+      summary: Get information about a single repository.
+      security:
+        - ApiKeyAuth: []
+        - ApiKeyAuth: []
+          GitHubToken: []
+      parameters:
+        - in: path
+          name: repositoryId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Repository information retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepositoryInfo'
+
+  /query:
+    post:
+      summary: Execute a query with optional streaming.
+      security:
+        - ApiKeyAuth: []
+          GitHubToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryRequest'
+      responses:
+        '200':
+          description: Query executed successfully. Response may be streamed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryResponse'

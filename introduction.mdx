@@ -23,7 +23,7 @@ There are broadly **two ways** to use Greptile -
     title="LLM-powered codebase Q&A"
     icon="messages-question"
   >
-    Chat with any codebase using our <a href="https://app.greptile.com"> web app</a>, our VS Code plugin or in your terminal using our CLI, available via `npm i -g greptile`.
+    Chat with any codebase using our <a href="https://app.greptile.com">web app</a>, our VS Code plugin or in your terminal using our CLI, available via `npm i -g greptile`.
   </Card>
   <Card
     title="Internal AI Developer tools"
@@ -33,17 +33,17 @@ There are broadly **two ways** to use Greptile -
   </Card>
 </CardGroup>
 
-Regardless of how you use Greptile, the broad flow looks like this:
+Regardless of how you use Greptile, the overall flow looks like this:
 
-1. **Authenticate with your code host**: e.g. GitHub, GitLab, Azure Devops
-2. **Submit repo for indexing**: one-time, takes 5-50 minutes depending on codebase size, auto-updates index on every push. 
-3. **Query in natural language**: answers with full-codebase context in \<3 seconds, responses can be streamed. 
+1. **Obtain API key and GitHub token**: one-time, takes 5 minutes. API support for GitLab and Azure Devops is coming soon.
+2. **Submit repository for indexing**: one-time, takes 5-50 minutes depending on codebase size, auto-updates index on every push.
+3. **Query in natural language**: answers with full-codebase context in \<3 seconds, responses can be streamed.
 
 ## Motivation
 
-We believe that full codebase-context is the core problem in building AI developer tools. With reliable, full codebase context, developers can build an endless list of tooling from PR review bots, to JIRA ticket annotators, to Slackbots to answer questions about the source code, and much, much more. 
+We believe that full codebase-context is the core problem in building AI developer tools. With reliable, full codebase context, developers can build unlimited tooling, from PR review bots, to JIRA ticket annotators, to Slackbots to answer questions about the source code, and much, much more.
 
-Our mission at Greptile is to provide develoeprs with that infrastructure as an easy to use API. 
+Our mission at Greptile is to provide developers with that infrastructure as an easy-to-use API.
 
 ## What will you build?
 
@@ -51,35 +51,32 @@ Here are some examples of internal tools you can build for your team with Grepti
 
 <CardGroup cols={2}>
   <Card
-    title="Codebase expert Slackbot"
+    title="Codebase Expert Slackbot"
     icon="slack"
   >
     Build an expert on your codebase that answers questions in your Slack!
   </Card>
 
   <Card
-    title="PR review bot"
+    title="PR Review Bot"
     icon="user-magnifying-glass"
   >
     Build a bot that writes thoughtful, codebase context-aware comments on your team's PRs.
   </Card>
 
   <Card
-    title="Auto documentation updater"
+    title="Automatic Docs Updater"
     icon="book-sparkles"
   >
-    Build a bot that writes a PR to update your docs every time you push new code, so your docs are always up-to-date. 
+    Build a bot that writes a PR to update your docs every time you push new code, so your docs are always up-to-date.
   </Card>
 
     <Card
-    title="Ticket enricher"
+    title="Ticket Enricher"
     icon="list-check"
   >
-    Automatically add context and instructoins to new tickets made in your task manager - Linear, Jira, etc. 
+    Automatically add context and instructions to new tickets made in your task manager - Linear, Jira, etc.
   </Card>
-  
+
 </CardGroup>
 ...the possibilities are endless!
-
-
-
