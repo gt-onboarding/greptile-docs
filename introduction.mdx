@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: 'Welcome to the home of your new documentation'
+description: 'Say hello to the AI expert on any codebase.'
 ---
 
 <img
@@ -14,58 +14,72 @@ description: 'Welcome to the home of your new documentation'
   alt="Hero Dark"
 />
 
-## Setting up
+Greptile is a platform that can search and understand complex codebases in natural language.
 
-The first step to world-class documentation is setting up your editing environments.
-
-<CardGroup cols={2}>
-  <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
-  >
-    Get your docs set up locally for easy development
-  </Card>
-  <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
-  >
-    Preview your changes before you push to make sure they're perfect
-  </Card>
-</CardGroup>
-
-## Make it yours
-
-Update your docs to your brand and add valuable content for the best user conversion.
+There are broadly **two ways** to use Greptile -
 
 <CardGroup cols={2}>
   <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
+    title="LLM-powered codebase Q&A"
+    icon="messages-question"
   >
-    Customize your docs to your company's colors and brands
+    Chat with any codebase using our <a href="https://app.greptile.com"> web app</a>, our VS Code plugin or in your terminal using our CLI, available via `npm i -g greptile`.
   </Card>
   <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
+    title="Internal AI Developer tools"
     icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/components/accordion"
   >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/showcase"
-  >
-    Check out our showcase of our favorite documentation
+    Build custom internal AI dev tools such as PR review bots, Slackbots, documentation updaters and more, with the power of full codebase context.
   </Card>
 </CardGroup>
+
+Regardless of how you use Greptile, the broad flow looks like this:
+
+1. **Authenticate with your code host**: e.g. GitHub, GitLab, Azure Devops
+2. **Submit repo for indexing**: one-time, takes 5-50 minutes depending on codebase size, auto-updates index on every push. 
+3. **Query in natural language**: answers with full-codebase context in \<3 seconds, responses can be streamed. 
+
+## Motivation
+
+We believe that full codebase-context is the core problem in building AI developer tools. With reliable, full codebase context, developers can build an endless list of tooling from PR review bots, to JIRA ticket annotators, to Slackbots to answer questions about the source code, and much, much more. 
+
+Our mission at Greptile is to provide develoeprs with that infrastructure as an easy to use API. 
+
+## What will you build?
+
+Here are some examples of internal tools you can build for your team with Greptile's API:
+
+<CardGroup cols={2}>
+  <Card
+    title="Codebase expert Slackbot"
+    icon="slack"
+  >
+    Build an expert on your codebase that answers questions in your Slack!
+  </Card>
+
+  <Card
+    title="PR review bot"
+    icon="user-magnifying-glass"
+  >
+    Build a bot that writes thoughtful, codebase context-aware comments on your team's PRs.
+  </Card>
+
+  <Card
+    title="Auto documentation updater"
+    icon="book-sparkles"
+  >
+    Build a bot that writes a PR to update your docs every time you push new code, so your docs are always up-to-date. 
+  </Card>
+
+    <Card
+    title="Ticket enricher"
+    icon="list-check"
+  >
+    Automatically add context and instructoins to new tickets made in your task manager - Linear, Jira, etc. 
+  </Card>
+  
+</CardGroup>
+...the possibilities are endless!
+
+
+
