@@ -28,24 +28,6 @@ Before Greptile can search and answer questions about a repo, it must first be i
 
 You can use the ` POST /repository` endpoint to submit a repo indexing job. 
 
-Here is a sample request body:
-
-```json
-{
-    "remote": "github",
-    "repository": "vkameswaran/test", // formatted as owner/repository
-    // note that optional fields are ommitted here, see API reference for full set of fields. 
-}
-```
-
-If the job submission was successful, you should see a response like this:
-
-```json
-{
-    "response": "started repo processing"
-}
-```
-**Sample code**
 <CodeGroup>
 
   ```bash cURL
@@ -127,6 +109,27 @@ If the job submission was successful, you should see a response like this:
   ```
 </CodeGroup>
 
+<AccordionGroup>
+    <Accordion title="Sample request body">
+        ```json
+        {
+            "remote": "github",
+            "repository": "vkameswaran/test" // formatted as owner/repository
+            // note that optional fields are ommitted here, see API reference for full set of fields. 
+        }
+        ```
+    </Accordion>
+
+    <Accordion title="Sample response body">
+
+        ```json
+        {
+            "response": "started repo processing"
+        }
+        ```
+    </Accordion>
+</AccordionGroup>
+
 
 2. **Check repo indexing progress**
 
@@ -134,7 +137,7 @@ You can use the ` GET /repository` endpoint to submit a job and also get it's cu
 
 The repository identifier should be a URL-safe encoded version of `remote:owner/repository:branch", e.g. github%3Acooldev2024%2Fmyrepo%3Amain
 
-**Sample code**
+
 <CodeGroup>
 
   ```bash cURL
@@ -205,7 +208,7 @@ Now, you can send natural language queries to Greptile. To do this, use the `POS
 
 Here's what a sample request looks like:
 
-**Sample code**
+
 <CodeGroup>
 
   ```bash cURL
@@ -315,7 +318,7 @@ func main() {
 		"repositories": []map[string]string{
 			{
 				"name":   "vkameswaran/test",
-				"branch": "main",
+				"branch": "main"
 			},
 		},
 		"sessionId": "00wr06v8igyjck8v5ggydo7",
@@ -340,82 +343,84 @@ func main() {
   ```
 </CodeGroup>
 
-Here's a sample response (this is streamed). 
 
-```json
-{
-    "type": "status",
-    "message": "Received request"
-}
-{
-    "type": "status",
-    "message": "Started processing request"
-}
-{
-    "type": "status",
-    "message": "Identifying relevant sources"
-}
-{
-    "type": "sources",
-    "message": [
-        {
-            "text": "Path: /README.md \nSummary: This code file does not contain any classes or functions. It is simply a comment providing information about the purpose of the file and a personal opinion about the best fruit.",
-            "index": "65ca74eedcc77b8d1ab065e5",
-            "id": "42664c872c0dc547d1466e52df19d5c2",
-            "metadata": {
-                "branch": "main",
-                "filepath": "README.md",
-                "remote": "github",
-                "repository": "dmthbWVzd2FyYW4vdGVzdA"
+<Accordion title="Sample response">
+
+    ```json
+    {
+        "type": "status",
+        "message": "Received request"
+    }
+    {
+        "type": "status",
+        "message": "Started processing request"
+    }
+    {
+        "type": "status",
+        "message": "Identifying relevant sources"
+    }
+    {
+        "type": "sources",
+        "message": [
+            {
+                "text": "Path: /README.md \nSummary: This code file does not contain any classes or functions. It is simply a comment providing information about the purpose of the file and a personal opinion about the best fruit.",
+                "index": "65ca74eedcc77b8d1ab065e5",
+                "id": "42664c872c0dc547d1466e52df19d5c2",
+                "metadata": {
+                    "branch": "main",
+                    "filepath": "README.md",
+                    "remote": "github",
+                    "repository": "dmthbWVzd2FyYW4vdGVzdA"
+                },
+                "createdAt": "2024-02-12T19:44:01.899Z",
+                "source": {},
+                "dist": 0
             },
-            "createdAt": "2024-02-12T19:44:01.899Z",
-            "source": {},
-            "dist": 0
-        },
-        // more sources
-    ]
-}
-{
-    "type": "status",
-    "message": "Writing response"
-}
-{
-    "type": "message",
-    "message": "Based"
-}
-{
-    "type": "message",
-    "message": " on"
-}
-{
-    "type": "message",
-    "message": " the"
-}
-{
-    "type": "message",
-    "message": " information"
-}
-// ... chunks omitted for brevity ...
-{
-    "type": "message",
-    "message": " purposes"
-}
-{
-    "type": "message",
-    "message": "."
-}
-{
-    "type": "status",
-    "message": ""
-}
-```
+            // more sources
+        ]
+    }
+    {
+        "type": "status",
+        "message": "Writing response"
+    }
+    {
+        "type": "message",
+        "message": "Based"
+    }
+    {
+        "type": "message",
+        "message": " on"
+    }
+    {
+        "type": "message",
+        "message": " the"
+    }
+    {
+        "type": "message",
+        "message": " information"
+    }
+    // ... chunks omitted for brevity ...
+    {
+        "type": "message",
+        "message": " purposes"
+    }
+    {
+        "type": "message",
+        "message": "."
+    }
+    {
+        "type": "status",
+        "message": ""
+    }
+    ```
+</Accordion>
 
 ## Summary
 
 Here is a combined code sample:
 
 <CodeGroup>
-```node node
+```javascript node
 const fetch = require('node-fetch');
 
 // Sample request body for POST /repository endpoint
@@ -584,5 +589,5 @@ func main() {
 }
 
 ```
-</CodeGroup
+</CodeGroup>
 If you have any questions, please reach out to us at [support@greptile.com](mailto:support@greptile.com)
