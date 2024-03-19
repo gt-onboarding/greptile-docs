@@ -5,22 +5,16 @@ description: 'Get started with the Greptile API'
 
 This guide will help you set up the Greptile API to answer hard questions about your codebase. There are only three steps, setting up **permissions**, **indexing**, and **querying**.
 
+Base URL: `https://api.greptile.com/v2/`.
+
 ## Permissions
 
 You'll need a Greptile API key and a GitHub personal access token (PAT) to authenticate your requests.
 
-1. **Greptile API key**
-
-Click [here](https://app.greptile.com/api) to get your Greptile key. You will need to log in via GitHub or Microsoft.
+1. **Greptile API key** -- Click [here](https://app.greptile.com/api) to get your Greptile key. You will need to log in via GitHub or Microsoft.
 
 
-2. **GitHub Access Token**
-
-Greptile needs read access to your GitHub repositories, in order to index them. You can provision a GitHub PAT by following [this guide from GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token).
-
-Make sure to select the `repo` scope when creating the token, as this is required for Greptile to clone your repositories.
-
-Support for GitLab and Azure DevOps is coming soon!
+2. **GitHub Access Token** -- Click [here](https://github.com/settings/tokens?type=beta) to generate a PAT. Greptile needs read access to your GitHub repositories, in order to index them. You can provision a GitHub PAT by following [this guide from GitHub](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token). Make sure to select the `repo` scope when creating the token, as this is required for Greptile to clone your repositories. Support for GitLab and Azure DevOps is coming soon!
 
 ## Indexing
 
@@ -30,11 +24,245 @@ Before Greptile can search and answer questions about a repository, it must be i
 
 You can use the `POST /repositories` endpoint to submit a repository indexing job.
 
+<AccordionGroup>
+    <Accordion title="Sample request">
+        ```json
+        // POST https://api.greptile.com/v2/repositories
+        // Headers:
+        //   Authorization: Bearer {greptileApiKey}
+        //   X-Github-Token: {githubToken}
+
+        {
+            "remote": "github",
+            "repository": "pandas-dev/pandas"
+            // ... see API reference for optional fields
+        }
+        ```
+    </Accordion>
+
+    <Accordion title="Sample response">
+
+        ```json
+        // 200
+
+        {
+            "response": "started repo processing"
+        }
+        ```
+    </Accordion>
+</AccordionGroup>
+
+<CodeGroup>
+
+  ```bash cURL
+  export GREPTILE_API_KEY="your-greptile-api-key"
+  export GITHUB_TOKEN="your-github-token"
+
+  curl -X POST \
+    https://api.greptile.com/v2/repositories \
+    -H "Authorization: Bearer $GREPTILE_API_KEY" \
+    -H "X-Github-Token: $GITHUB_TOKEN" \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "remote": "github",
+        "repository": "pandas-dev/pandas"
+    }'
+  ```
+
+  ```javascript node
+  const greptileApiKey = "your-greptile-api-key";
+  const githubToken = "your-github-token";
+
+  const repositoryPayload = {
+      remote: "github",
+      repository: "pandas-dev/pandas"
+  };
+
+  fetch('https://api.greptile.com/v2/repositories', {
+      method: 'POST',
+      headers: {
+          'Authorization': `Bearer ${greptileApiKey}`,
+          'X-Github-Token': githubToken,
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(repositoryPayload)
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+
+  ```
+
+  ```python python
+  import requests
+
+  greptileApiKey = "your-greptile-api-key"
+  githubToken = "your-github-token"
+
+  url = 'https://api.greptile.com/v2/repositories'
+  headers = {
+      'Authorization': f'Bearer {greptileApiKey}',
+      'X-Github-Token': githubToken,
+      'Content-Type': 'application/json'
+  }
+  payload = {
+      "remote": "github",
+      "repository": "pandas-dev/pandas"
+  }
+
+  response = requests.post(url, json=payload, headers=headers)
+  print(response.json())
+  ```
+
+  ```go go
+  package main
+
+  import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+  )
+
+  func main() {
+    greptileApiKey := "your-greptile-api-key"
+    githubToken := "your-github-token"
+
+    repositoryData := map[string]string{
+      "remote":     "github",
+      "repository": "pandas-dev/pandas",
+    }
+    repositoryPayload, _ := json.Marshal(repositoryData)
+
+    repositoryReq, _ := http.NewRequest("POST", "https://api.greptile.com/v2/repositories", bytes.NewBuffer(repositoryPayload))
+    repositoryReq.Header.Set("Authorization", fmt.Sprintf("Bearer %s", greptileApiKey))
+    repositoryReq.Header.Set("X-Github-Token", githubToken)
+    repositoryReq.Header.Set("Content-Type", "application/json")
+
+    repositoryClient := &http.Client{}
+    repositoryResp, _ := repositoryClient.Do(repositoryReq)
+    defer repositoryResp.Body.Close()
+
+    fmt.Println("Response Status:", repositoryResp.Status)
+  }
+  ```
+</CodeGroup>
+
 See our [API Reference](/api-reference/index) for more details and to send test requests.
 
 2. **Check repository indexing progress**
 
 You can use the `GET /repositories/{repositoryId}` endpoint to check the status of a repository's index. The `repositoryId` should be URL-encoded in the format `remote:branch:owner/repository`.
+
+<AccordionGroup>
+    <Accordion title="Sample request">
+        ```json
+        // GET https://api.greptile.com/v2/repositories/github%3Amain%3Apandas-dev%2Fpandas
+        // Headers:
+        //   Authorization: Bearer {greptileApiKey}
+        //   X-Github-Token: {githubToken}
+        ```
+    </Accordion>
+
+    <Accordion title="Sample response">
+
+        ```json
+        // 200
+
+        {
+          "repository": "pandas-dev/pandas",
+          "remote": "github",
+          "branch": "main",
+          "private": false,
+          "status": "submitted",
+          "filesProcessed": 0,
+          "numFiles": 26083,
+          "sampleQuestions": [],
+          "sha": "89b286a699b2d023b7a1ebc468abf230d84ad547"
+        }
+        ```
+    </Accordion>
+</AccordionGroup>
+
+<CodeGroup>
+
+  ```bash cURL
+  export GREPTILE_API_KEY="your-greptile-api-key"
+  export GITHUB_TOKEN="your-github-token"
+
+  curl -X GET \
+    https://api.greptile.com/v2/repositories/github%3Amain%3Apandas-dev%2Fpandas \
+    -H "Authorization: Bearer $GREPTILE_API_KEY" \
+    -H "X-Github-Token: $GITHUB_TOKEN"
+  ```
+
+  ```javascript node
+  const greptileApiKey = "your-greptile-api-key";
+  const githubToken = "your-github-token";
+
+  const repositoryIdentifier = encodeURIComponent("github:main:pandas-dev/pandas");
+
+  fetch(`https://api.greptile.com/v2/repositories/${repositoryIdentifier}`, {
+      method: 'GET',
+      headers: {
+          'Authorization': `Bearer ${greptileApiKey}`,
+          'X-Github-Token': githubToken
+      }
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+  ```
+
+  ```python python
+  import requests
+
+  greptileApiKey = "your-greptile-api-key"
+  githubToken = "your-github-token"
+
+  repositoryIdentifier = "github%3Amain%3Apandas-dev%2Fpandas"
+
+  url = f'https://api.greptile.com/v2/repositories/{repositoryIdentifier}'
+  headers = {
+      'Authorization': f'Bearer {greptileApiKey}',
+      'X-Github-Token': githubToken
+  }
+
+  response = requests.get(url, headers=headers)
+  print(response.json())
+  ```
+
+  ```go go
+  package main
+
+  import (
+    "fmt"
+    "net/http"
+    "io/ioutil"
+  )
+
+  func main() {
+    greptileApiKey := "your-greptile-api-key"
+    githubToken := "your-github-token"
+
+    repositoryIdentifier := "github%3Amain%3Apandas-dev%2Fpandas"
+
+    repositoryReq, _ := http.NewRequest("GET", fmt.Sprintf("https://api.greptile.com/v2/repositories/%s", repositoryIdentifier), nil)
+    repositoryReq.Header.Set("Authorization", fmt.Sprintf("Bearer %s", greptileApiKey))
+    repositoryReq.Header.Set("X-Github-Token", githubToken)
+    repositoryReq.Header.Set("Content-Type", "application/json")
+
+    repositoryClient := &http.Client{}
+    repositoryResp, _ := repositoryClient.Do(repositoryReq)
+    defer repositoryResp.Body.Close()
+
+    body, _ := ioutil.ReadAll(repositoryResp.Body)
+    bodyString := string(body)
+    fmt.Println(bodyString)
+  }
+  ```
+
+</CodeGroup>
 
 The JSON response has a `status` field which should be one of the following options:
 
@@ -43,14 +271,322 @@ The JSON response has a `status` field which should be one of the following opti
 - `processing`: indexing is in progress. This is the longest step.
 - `completed`: the repository index is ready to be queried!
 
+If there is a `sha` in the response, it means the repository has been indexed and is ready to be queried. We may just be processing updates from a newer commit.
+
 See our [API Reference](/api-reference/get-repository) for more details and to send test requests.
 
 ## Query
 
 Now, you can send natural language queries to Greptile! To do this, use the `POST /query` endpoint. Note that this endpoint is based on the OpenAI Chat format, so the query must be formatted as a `messages` object, which can simply have length 1.
 
+<AccordionGroup>
+    <Accordion title="Sample request">
+        ```json
+        // POST https://api.greptile.com/v2/query
+        // Headers:
+        //   Authorization: Bearer {greptileApiKey}
+        //   X-Github-Token: {githubToken}
+
+        {
+            "messages": [
+                {
+                    "id": "some-id-1",
+                    "content": "Where's the code responsible for concatenating dataframes?",
+                    "role": "user"
+                }
+            ],
+            "repositories": [
+                {
+                    "name": "pandas-dev/pandas",
+                    "branch": "main"
+                }
+            ],
+            "sessionId": "test-session-id",
+            // "stream": true // optional, set to true to stream results
+        }
+        ```
+    </Accordion>
+
+    <Accordion title="Sample response (buffered)">
+
+        ```json
+        // 200
+
+        {
+          "message": "The code responsible for concatenating `DataFrame` objects in the `pandas` library is found in the `concat` function within the `concat.py` file located at `/pandas/core/reshape/concat.py`. The `concat` function orchestrates the concatenation process and can handle both `Series` and `DataFrame` objects.\n\nHere's a simplified view of the relevant part of the `concat` function:\n\n```python\ndef concat(\n    objs: Iterable[Series | DataFrame] | Mapping[HashableT, Series | DataFrame],\n    *,\n    axis: Axis = 0,\n    join: str = \"outer\",\n    ignore_index: bool = False,\n    keys: Iterable[Hashable] | None = None,\n    levels=None,\n    names: list[HashableT] | None = None,\n    verify_integrity: bool = False,\n    sort: bool = False,\n    copy: bool | None = None,\n) -> DataFrame | Series:\n    \"\"\"\n    Concatenate pandas objects along a particular axis with optional set logic\n    along the other axes.\n    \"\"\"\n    # ... (some code omitted for brevity)\n\n    op = _Concatenator(\n        objs,\n        axis=axis,\n        ignore_index=ignore_index,\n        join=join,\n        keys=keys,\n        levels=levels,\n        names=names,\n        verify_integrity=verify_integrity,\n        sort=sort,\n    )\n\n    return op.get_result()\n```\n\nThe `concat` function initializes an instance of the `_Concatenator` class with the provided parameters and then calls its `get_result` method to perform the actual concatenation.\n\nThe `_Concatenator` class contains the logic to handle the concatenation of `DataFrame` objects, taking into account the axis, join method, whether to ignore the index, and other parameters. The `get_result` method of `_Concatenator` orchestrates the concatenation operation for `BlockManagers`, which are the internal data structures that hold the actual data within a `DataFrame`.\n\nFor a detailed understanding, you would need to look into the `_Concatenator` class and its methods, particularly `get_result`, which is where the concatenation of `DataFrame` objects is executed.",
+          "sources": [
+            {
+              "repository": "pandas-dev/pandas",
+              "remote": "github",
+              "branch": "main",
+              "filepath": "/pandas/core/reshape/concat.py",
+              "linestart": null,
+              "lineend": null,
+              "summary": "The code file is a part of the pandas library and contains functions and classes related to concatenating pandas objects, such as DataFrames and Series.\n\n- The file starts with import statements for various modules and classes.\n- It defines the `concat` function, which is used to concatenate pandas objects along a specified axis. The function has multiple overloaded versions, each with different parameter types and return types. The function takes in parameters such as `objs` (iterable or mapping of Series or DataFrame objects), `axis` (axis to concatenate along), `join` (how to handle indexes on other axes), `ignore_index` (whether to use the index values along the concatenation axis), `keys` (used to construct a hierarchical index), `levels` (specific levels to use for constructing a MultiIndex), `names` (names for the levels in the resulting hierarchical index), `verify_integrity` (whether the new concatenated axis contains duplicates), `sort` (whether to sort the non-concatenation axis), and `copy` (whether to copy data unnecessarily). The function returns a DataFrame or Series object depending on the concatenation axis. The function also provides examples and additional information on how to use it.\n- The file also includes a class `_Concatenator` that orchestrates a concatenation operation for BlockManagers. It has several methods, including `_get_result_dim`, `new_axes`, `_get_comb_axis`, `_get_concat_axis`, and `_maybe_check_integrity`.\n- There are also helper functions `_concat_indexes` and `_make_concat_multiindex` that are used internally for concatenation operations. `_concat_indexes` appends multiple indexes together, while `_make_concat_multiindex` creates a MultiIndex object based on the provided keys, levels, and names.\n\nOverall, the file provides the functionality to concatenate pandas objects along different axes and handle various parameters and options for the concatenation process."
+            }
+          ]
+        }
+        ```
+    </Accordion>
+
+    <Accordion title="Sample response (streamed)">
+      ```json
+      {
+        "type": "status",
+        "message": "Received request"
+      }
+      {
+        "type": "status",
+        "message": "Started processing request"
+      }
+      {
+        "type": "status",
+        "message": "Identifying relevant sources"
+      }
+      {
+        "type": "status",
+        "message": "Retrieving sources"
+      }
+      {
+        "type": "sources",
+        "message": [
+          {
+            "repository": "pandas-dev/pandas",
+            "remote": "github",
+            "branch": "main",
+            "filepath": "/pandas/core/reshape/concat.py",
+            "linestart": null,
+            "lineend": null,
+            "summary": "The code file is a part of the pandas library and contains functions and classes related to concatenating pandas objects, such as DataFrames and Series.\n\n- The file starts with import statements for various modules and classes.\n- It defines the `concat` function, which is used to concatenate pandas objects along a specified axis. The function has multiple overloaded versions, each with different parameter types and return types. The function takes in parameters such as `objs` (iterable or mapping of Series or DataFrame objects), `axis` (axis to concatenate along), `join` (how to handle indexes on other axes), `ignore_index` (whether to use the index values along the concatenation axis), `keys` (used to construct a hierarchical index), `levels` (specific levels to use for constructing a MultiIndex), `names` (names for the levels in the resulting hierarchical index), `verify_integrity` (whether the new concatenated axis contains duplicates), `sort` (whether to sort the non-concatenation axis), and `copy` (whether to copy data unnecessarily). The function returns a DataFrame or Series object depending on the concatenation axis. The function also provides examples and additional information on how to use it.\n- The file also includes a class `_Concatenator` that orchestrates a concatenation operation for BlockManagers. It has several methods, including `_get_result_dim`, `new_axes`, `_get_comb_axis`, `_get_concat_axis`, and `_maybe_check_integrity`.\n- There are also helper functions `_concat_indexes` and `_make_concat_multiindex` that are used internally for concatenation operations. `_concat_indexes` appends multiple indexes together, while `_make_concat_multiindex` creates a MultiIndex object based on the provided keys, levels, and names.\n\nOverall, the file provides the functionality to concatenate pandas objects along different axes and handle various parameters and options for the concatenation process."
+          }
+        ]
+      }
+      {
+        "type": "status",
+        "message": "Writing response"
+      }
+      {
+        "type": "message",
+        "message": "The"
+      }
+      {
+        "type": "message",
+        "message": " code"
+      }
+      {
+        "type": "message",
+        "message": " responsible"
+      }
+      {
+        "type": "message",
+        "message": " for"
+      }
+      {
+        "type": "message",
+        "message": " concaten"
+      }
+      {
+        "type": "message",
+        "message": "ating"
+      }
+      {
+        "type": "message",
+        "message": " Data"
+      }
+      {
+        "type": "message",
+        "message": "Frames"
+      }
+      {
+        "type": "message",
+        "message": " in"
+      }
+      {
+        "type": "message",
+        "message": " the"
+      }
+      // ...message chunks omitted
+      {
+        "type": "message",
+        "message": " with"
+      }
+      {
+        "type": "message",
+        "message": " to"
+      }
+      {
+        "type": "message",
+        "message": " concatenate"
+      }
+      {
+        "type": "message",
+        "message": " their"
+      }
+      {
+        "type": "message",
+        "message": " data"
+      }
+      {
+        "type": "message",
+        "message": "."
+      }
+      {
+        "type": "status",
+        "message": ""
+      }
+      ```
+    </Accordion>
+</AccordionGroup>
+
+<CodeGroup>
+
+  ```bash cURL
+  export GREPTILE_API_KEY="your-greptile-api-key"
+  export GITHUB_TOKEN="your-github-token"
+
+  curl -X POST \
+    https://api.greptile.com/v2/query \
+    -H "Authorization: Bearer $GREPTILE_API_KEY" \
+    -H "X-Github-Token: $GITHUB_TOKEN" \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "messages": [
+            {
+                "id": "some-id-1",
+                "content": "Where'\''s the code responsible for concatenating dataframes?",
+                "role": "user"
+            }
+        ],
+        "repositories": [
+            {
+                "name": "pandas-dev/pandas",
+                "branch": "main"
+            }
+        ],
+        "sessionId": "test-session-id"
+    }'
+  ```
+
+  ```javascript node
+  const greptileApiKey = "your-greptile-api-key";
+  const githubToken = "your-github-token";
+
+  const queryPayload = {
+      messages: [
+          {
+              id: "some-id-1",
+              content: "Where's the code responsible for concatenating dataframes?",
+              role: "user"
+          }
+      ],
+      repositories: [
+          {
+              name: "pandas-dev/pandas",
+              branch: "main"
+          }
+      ],
+      sessionId: "test-session-id"
+  };
+
+  fetch('https://api.greptile.com/v2/query', {
+      method: 'POST',
+      headers: {
+          'Authorization': `Bearer ${greptileApiKey}`,
+          'X-Github-Token': githubToken,
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(queryPayload)
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+  ```
+
+  ```python python
+  import requests
+
+  greptileApiKey = "your-greptile-api-key"
+  githubToken = "your-github-token"
+
+  url = 'https://api.greptile.com/v2/query'
+  headers = {
+      'Authorization': f'Bearer {greptileApiKey}',
+      'X-Github-Token': githubToken,
+      'Content-Type': 'application/json'
+  }
+  payload = {
+      "messages": [
+          {
+              "id": "some-id-1",
+              "content": "Where's the code responsible for concatenating dataframes?",
+              "role": "user"
+          }
+      ],
+      "repositories": [
+          {
+              "name": "pandas-dev/pandas",
+              "branch": "main"
+          }
+      ],
+      "sessionId": "test-session-id"
+  }
+
+  response = requests.post(url, json=payload, headers=headers)
+  print(response.json())
+  ```
+
+  ```go go
+  package main
+
+  import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+    "io/ioutil"
+  )
+
+  func main() {
+    greptileApiKey := "your-greptile-api-key"
+    githubToken := "your-github-token"
+
+    queryData := map[string]interface{}{
+      "messages": []map[string]string{
+        {
+          "id":      "some-id-1",
+          "content": "Where's the code responsible for concatenating dataframes?",
+          "role":    "user",
+        },
+      },
+      "repositories": []map[string]string{
+        {
+          "name":   "pandas-dev/pandas",
+          "branch": "main",
+        },
+      },
+      "sessionId": "test-session-id",
+    }
+    queryPayload, _ := json.Marshal(queryData)
+
+    queryReq, _ := http.NewRequest("POST", "https://api.greptile.com/v2/query", bytes.NewBuffer(queryPayload))
+    queryReq.Header.Set("Authorization", fmt.Sprintf("Bearer %s", greptileApiKey))
+    queryReq.Header.Set("X-Github-Token", githubToken)
+    queryReq.Header.Set("Content-Type", "application/json")
+
+    queryClient := &http.Client{}
+    queryResp, _ := queryClient.Do(queryReq)
+    defer queryResp.Body.Close()
+
+    body, _ := ioutil.ReadAll(queryResp.Body)
+    bodyString := string(body)
+    fmt.Println(bodyString)
+  }
+  ```
+
+</CodeGroup>
+
 See our [API Reference](/api-reference/query) for more details and to send test requests.
 
 ---
 
-If you have any questions, please reach out to us at [support@greptile.com](mailto:support@greptile.com)
+If you have any questions, please reach out to us at [support@greptile.com](mailto:support@greptile.com).

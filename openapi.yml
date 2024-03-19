@@ -9,9 +9,8 @@ servers:
 components:
   securitySchemes:
     ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
+      type: http
+      scheme: bearer
     GitHubToken:
       type: apiKey
       in: header
