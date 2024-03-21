@@ -47,7 +47,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart"]
+      "pages": ["introduction", "quickstart", "prompt-guide"]
     },
     {
       "group": "API Reference",

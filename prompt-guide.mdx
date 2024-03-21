@@ -1,0 +1,73 @@
+---
+title: 'Prompt Guide'
+description: 'A semi-exhaustive list of what you can ask Greptile, and how to get it to do what you want.'
+---
+
+## Introduction
+
+Like with many LLM-powered tools, it can be hard to know exactly what you can do with Greptile. This page goes over some usecases that we have seen developers enjoy. While this guide is mainly meant for our [codebase Q&A web app](https://app.greptile.com) it applies to all other interfaces as well, including the API. 
+
+
+### Understanding complex codebases
+
+Greptile can help developers understand how a repo works, or how a specific part of it works by providing simple explanations and specific code reference links. 
+
+*Examples* 
+
+1. "How does auth work in this codebase?"
+2. "Where is the code that cleans user inputs sent via the API?"
+3. "What does the `api/proc.ts` file do?"
+
+<Tip>Many developers use Greptile on open source repos related to their work, to understand how things are implemented there.</Tip>
+
+### Debugging
+
+Given an error message, stack trace, or simply a description of unexpected behavior, Greptile can diagnose the cause and suggest a fix with corrected code. 
+
+*Examples*
+1. "Why am I getting a `FileNotFound: Object has no attribute c://` error when I call `signal.parse()`?"
+2. "When I click on the profile drop-down, the page refreshes. Why?"
+3. "`[...Stack trace/error messages]` - why is this happening?"
+
+### Mapping out complex code changes
+
+Given a description of a task or ticket, Greptile can use its understanding of the codebase to map out the steps needed to fulfill the task. It can generate the required code and tell you exactly where in the codebase to put it. 
+
+*Examples*
+1. "How do I make it so the sidebar toggle state is stored in local storage?"
+2. "How do I modify the chat history so users can rename their old chats?"
+3. "Help me modify the express router to add suport for session tokens?"
+
+### Integrating with 3rd party libraries
+
+You can add multiple repos to the same Greptile session. For example, you can add `your-org/your-backend` and `nextauthjs/next-auth` to the same session and ask "How do I add sign-in with google to `your-backend` using `nextauth`?
+
+*Examples*
+1. Add `stripe/stripe-node` and ask "How do I add usage-based billing to `your-backend`?"
+2. Add `twilio/twilio-ruby` and ask "How do I stream my LLM output from `your-frontend` to the twilio SDK?
+
+<Tip>Suspect that a bug in your app might be related to an open-souce dependency? You can add its repo to your session so Greptile search it to help with diagnosis.</Tip>
+
+### Evaluating code for performance and security
+
+Greptile can help find oppurtinities for performance and security improvements. Simply point it to a file or directory, and ask!
+
+*Examples*
+
+1. "Are there any security concerns in `api/auth`?"
+2. "How can I make the parser faster?"
+3. "How do I modify `db_connector` to be more scalable?"
+
+<Warning>Greptile is built on LLMs, and may not answer comprehensively when asked about security concerns. The responses should be viewed as a guide, not as a source of absolute truth. </Warning>
+
+## Prompting with purpose
+
+Generally speaking, Greptile performs better when the instructions are more specific and as much information is provided as possible. 
+
+**Here are some tips:**
+
+<Check>**Mention symbols:** If you have some guess on where in the codebase the answer might be, including symbol names can help Greptile find answers better. </Check>
+<Check>**Include detail:** Be verbose when possible. When debugging, provide all the information you are getting from console, such as error messages and stack traces.</Check>
+<Check>**Be specific about output format:** If you want code to be generated, say "generate the full code for this". If you could like the answer to be short, say "Answer in one sentence."</Check>
+
+Like with all LLM prompting, you will discover subtelties over time about how to make Greptile work best with your codebase and your usecase. If you would like to report a prompting quirk, [tell us!](mailto:support@greptile.com) It helps us make Greptile better.
