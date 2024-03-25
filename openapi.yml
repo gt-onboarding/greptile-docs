@@ -121,7 +121,7 @@ components:
                 type: string
               branch:
                 type: string
-              name:
+              repository:
                 type: string
         sessionId:
           type: string
