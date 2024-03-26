@@ -47,7 +47,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "prompt-guide"]
+      "pages": ["introduction", "quickstart", "examples", "prompt-guide"]
     },
     {
       "group": "API Reference",
@@ -65,5 +65,11 @@
     "twitter": "https://twitter.com/greptileai",
     "github": "https://github.com/greptileai",
     "linkedin": "https://www.linkedin.com/company/greptile"
-  }
+  },
+  "analytics": {
+    "posthog": {
+        "apiKey": "phc_qh8L3NKZ4JP6pOLRnuF3UkkUVjmktWW1mR8WfiIvWyi"
+    }
+}
+
 }
