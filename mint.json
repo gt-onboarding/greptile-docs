@@ -29,12 +29,12 @@
   ],
   "anchors": [
     {
-      "name": "Home",
+      "name": "Greptile Home",
       "icon": "house",
       "url": "https://greptile.com"
     },
     {
-      "name": "Community",
+      "name": "Discord",
       "icon": "discord",
       "url": "https://discord.gg/2FPzTYnP"
     },

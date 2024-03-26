@@ -5,29 +5,46 @@ description: 'Some internal dev tools you can build with Greptile'
 
 Greptile's API can be used to build tools to augment every step of your software development lifecycle using AI, from when you create a ticket to when you merge your code and update your docs. 
 
-Here are some examples:
+Here are some examples, sorted by steps in the software development life cycle. 
 
+---
+
+## Planning & Design
+<CardGroup cols={2}>
   <Card
     title="Task Enricher"
-    icon="list"
-  >
-  Integrate Greptile with **GitHub Issues**, **Linear**, **Jira**, **Asana** etc. to automatically add codebase context to every new ticket, detailing how to get started with the ticket, what files to look, etc. 
+    icon="list-check"
+    >
+    Integrate Greptile with **GitHub Issues**, **Linear**, **Jira**, **Asana** etc. to automatically add codebase context to every new ticket, detailing how to get started with the ticket, what files to look, etc. 
   </Card>
 
-<Card
-    title="Q&A Slackbot"
-    icon="slack"
-  >
- Greptile can answer your teams questions about your source code, right in your **Slack**!
-  </Card>
+    <Card
+      title="Design Doc Reviewer"
+      icon="route"
+      >
+      Integrate Greptile with **Quip** or **Google Docs** so it can provide codebase context-aware comments, catching gaps and recommending things to consider before you start programming. 
+    </Card>
 
+</CardGroup>
 
-  <Card
-    title="Intelligent Debugger"
-    icon="bug"
-  >
- Integrate with your **debugger** to automatically get codebase context-aware tips for where errors might be coming from! 
-  </Card>
+---
+
+## Implementation
+
+<CardGroup cols={2}>
+
+    <Card
+        title="Q&A Slackbot"
+        icon="slack"
+      >
+    Greptile can answer your teams questions about your source code, right in your **Slack**!
+    </Card>
+    <Card
+      title="Intelligent Debugger"
+      icon="bug"
+    >
+  Integrate with your **debugger** to automatically get codebase context-aware tips for where errors might be coming from! 
+    </Card>
 
     <Card
     title="Commit message generator"
@@ -35,6 +52,19 @@ Here are some examples:
   >
   Integrate Greptile with `git` to auto-generate a comprehensive, codebase context-aware commit message. Future developers will thank you!
   </Card>
+
+</CardGroup>
+
+---
+
+## Testing & Integration
+<CardGroup cols={2}>
+  <Card
+    title="Test Writer"
+    icon="vial-circle-check"
+    >
+    Greptile's API can generate new tests for each push, simply integrate it with GitHub/Gitlab etc. and configure the app to use Greptile to generate tests on every major code change. 
+</Card>
 
   <Card
     title="AI PR Review Bot"
@@ -56,5 +86,20 @@ Here are some examples:
   >
   Integrate Greptile with your docs pipeline to auto-generate changelogs for every version. Simply pass in the diff and commit message, and Greptile will use it's codebase context awareness to write an informative, complete changelog!
   </Card>
+</CardGroup>
 
+---
+
+## Maintenance
+
+<CardGroup cols={2}>
+
+  <Card
+    title="Incident Report Enricher"
+    icon="triangle-exclamation"
+  >
+    Integrate with **Sentry** or **Cloudwatch** to get an slack messages/emails with potential diagnosis, relevant code references to investigate, and useful context in the event of an outage. 
+  </Card>
+
+</CardGroup>
   Got an idea for how to use our API that we missed? [Tell us!](mailto:hello@greptile.com)
