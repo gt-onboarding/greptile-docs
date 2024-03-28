@@ -1,0 +1,120 @@
+---
+title: AI Task Enricher
+description: 'Use the Greptile API to magically add instructions to every new ticket with codebase context.'
+---
+
+## Greptile + Linear
+    <img src="/images/task-enricher/hero.png" />
+As a software engineer I would often feel lost when I first looked at a ticket assigned to me. 
+Today, we will integrate Greptile with your task manager (in this example, [Linear](linear.app)) so every time a new ticket is created, Greptile will add a comment with context from the codebase including specific file paths relevant to the task. 
+
+Here's what that will look like:
+<Frame>
+    <img src="/images/task-enricher/gitlab.png" />
+</Frame>
+
+---
+
+### Set up Zapier
+
+<Steps>
+    <Step title="Create a Zapier account">
+        Go to [zapier.com](zapier.com) and create an account. 
+    </Step>
+
+    <Step title="Create a new Zap">
+        Click on the **+ Create** button and select **Zaps**
+    </Step>
+</Steps>
+
+---
+
+### Add Blocks
+
+Add event blocks exactly as shown in this image:
+
+<Frame>
+    <img src="/images/task-enricher/map.png"/>
+</Frame>
+
+1. **New Issue in Linear:** This block is triggered when a new issue is created in Linear. You will need to follow instructions in this block to connect your Linear account.
+2. **Webhooks, Custom Request:** This is where the request to the Greptile API is made. More detail on this below. 
+3. **Formatter:** This is to seperate the filepaths returned by the Greptile API with newlines.
+4. **Create Comment in Linear**: This adds the Greptile comment to the original Linear task that triggered this run. 
+
+### Calling the Greptile API
+
+
+#### Set `Event` to `Custom Request`
+<Frame>
+    <img src="/images/task-enricher/event.png"/>
+</Frame>
+
+#### Configure Request Options
+URL -> `https://app.greptile.com/v2/query`
+<Frame>
+    <img src="/images/task-enricher/method.png"/>
+</Frame>
+
+#### Paste this object into `body` and insert the Linear `title` and `description`
+
+This is what you should paste in:
+```json
+{
+   "messages":[
+      {
+         "id": "00000", // optional
+         "content":"Generate 3 extremely concise bullet point instructions for the following task.",
+         "role":"system"
+      },
+      {
+         "id": "00001", // optional
+         // Use "Insert Data ..." here
+         "content":"[INSERT_LINEAR_TASK_TITLE]: [INSERT_LINEAR_TASK_DESC]", 
+         "role":"user"
+      }
+   ],
+   "repositories":[
+      {
+         "repository":"tabnam-inc/onboardme",
+         "branch":"main"
+      },
+      {
+         "repository":"tabnam-inc/tabnam-api",
+         "branch":"main"
+      }
+   ]
+}
+```
+Once you insert the data from the Linear event block, it should look like this:
+<Frame>
+    <img src="/images/task-enricher/body.png"/>
+</Frame>
+
+#### Authenticate
+Configure the headers like this: 
+<Frame>
+    <img src="/images/task-enricher/auth.png"/>
+</Frame>
+
+1. Get your Greptile API key [here](https://app.greptile.com/api/)
+2. Get your GitHub Access Token [here](https://github.com/settings/tokens)
+
+Remember at add `"Bearer"` to the `Authorization` header value. 
+
+#### Format and Add Linear Comment
+
+Easy last step, configure the final two blocks.
+
+1. **Format**: This is optional, but I wanted my source filepaths to show up as newline seperated, so I used `Formatter` to do that. 
+2. **Add Comment: In this Linear block, simply configure it with the `Issue Id` of the original task, and add the `message` from the Greptile API as the body. 
+
+This is what that should look like:
+
+<Frame>
+    <img src="/images/task-enricher/comment.png"/>
+</Frame>
+
+That's it! Test the Zap and with 20-25 seconds of creating a new ticket in Linear, you should see a comment from Greptile adding helpful context!
+
+Build this yourself? [Tell us](mailto:hello@greptile.com) and we'll send you free Greptile swag!
