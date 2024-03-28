@@ -47,7 +47,14 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "examples", "prompt-guide"]
+      "pages": ["introduction", "quickstart", "prompt-guide"]
+    },
+    {
+      "group": "Examples",
+      "pages": [
+        "examples",
+        "examples/task-enricher"
+      ]
     },
     {
       "group": "API Reference",
