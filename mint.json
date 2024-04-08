@@ -63,7 +63,8 @@
         "api-reference/get-session",
         "api-reference/index",
         "api-reference/get-repository",
-        "api-reference/query"
+        "api-reference/query",
+        "api-reference/search"
       ]
     }
   ],

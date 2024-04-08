@@ -129,6 +129,28 @@ components:
           type: boolean
           description: Optional, default false.
 
+    SearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        repositories:
+          type: array
+          items:
+            type: object
+            properties:
+              remote:
+                type: string
+              branch:
+                type: string
+              repository:
+                type: string
+        sessionId:
+          type: string
+        stream:
+          type: boolean
+          description: Optional, default false.
+
     QueryResponse:
       type: object
       properties:
@@ -136,6 +158,9 @@ components:
           type: string
         message:
           type: string
+
+    SearchResponse:
+      type: array
 
 paths:
   /chats/{sessionId}:
@@ -219,3 +244,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/QueryResponse'
+
+  /search:
+    post:
+      summary: Search repositories with natural language queries.
+      security:
+        - ApiKeyAuth: []
+          GitHubToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Query executed successfully. Response may be streamed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
