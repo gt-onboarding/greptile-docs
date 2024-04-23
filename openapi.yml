@@ -125,9 +125,13 @@ components:
                 type: string
         sessionId:
           type: string
+          description: Optional, defaults to a new session.
         stream:
           type: boolean
           description: Optional, default false.
+        genius:
+          type: boolean
+          description: Optional, default false. Genius requests are smarter but slower, great for heavy usecases like PR reviews and documentation updaters. 
 
     SearchRequest:
       type: object
