@@ -36,9 +36,8 @@ components:
               role:
                 type: string
               sources:
-                type: array
-                items:
-                  type: object
+                $ref: '#/components/schemas/SearchResponse'
+
         repos:
           type: array
           items:
@@ -47,6 +46,32 @@ components:
           type: string
         title:
           type: string
+    Sources:
+      type: object
+      properties:
+        repository:
+          type: string
+          description: The name of the repository where the file resides.
+        remote:
+          type: string
+          description: The remote service or platform where the repository is hosted.
+        branch:
+          type: string
+          description: The branch of the repository where the file is found.
+        filepath:
+          type: string
+          description: The relative path to the file within the repository.
+        linestart:
+          type: integer
+          description: The starting line number of the code that is relevant, if applicable.
+          nullable: true
+        lineend:
+          type: integer
+          description: The ending line number of the code that is relevant, if applicable.
+          nullable: true
+        summary:
+          type: string
+          description: A summary or description of the contents and functionalities of the file.
 
     RepositoryRequest:
       type: object
@@ -102,6 +127,7 @@ components:
       type: object
       properties:
         messages:
+          description: List of chat messages until now. For a single query, include only one entry in the list with a natural language query. 
           type: array
           items:
             type: object
@@ -113,6 +139,7 @@ components:
               role:
                 type: string
         repositories:
+          description: List of repos that Greptile should reference while answering your question. 
           type: array
           items:
             type: object
@@ -125,21 +152,23 @@ components:
                 type: string
         sessionId:
           type: string
-          description: Optional, defaults to a new session.
+          description: Optional, defaults to a new session. Only use this if you intend to need to retrieve chat history later. 
         stream:
           type: boolean
           description: Optional, default false.
         genius:
           type: boolean
-          description: Optional, default false. Genius requests are smarter but slower, great for heavy usecases like PR reviews and documentation updaters. 
+          description: Optional, default false. Genius requests are smarter but 8-10 seconds slower, great for complex usecases like reviewing PR and updating technical docs. 
 
     SearchRequest:
       type: object
       properties:
         query:
           type: string
+          description: Natural language search query to find the right code in the repo. 
         repositories:
           type: array
+          description: List of repos that Greptile should reference while answering your question.
           items:
             type: object
             properties:
@@ -151,6 +180,7 @@ components:
                 type: string
         sessionId:
           type: string
+          description: Optional, defaults to a new session. You only need this if you want to retrieve this query/response later. 
         stream:
           type: boolean
           description: Optional, default false.
@@ -158,13 +188,16 @@ components:
     QueryResponse:
       type: object
       properties:
-        type:
-          type: string
         message:
           type: string
+        sources:
+          $ref: '#/components/schemas/SearchResponse'
+
 
     SearchResponse:
       type: array
+      items:
+        $ref: '#/components/schemas/Sources'
 
 paths:
   /chats/{sessionId}:
