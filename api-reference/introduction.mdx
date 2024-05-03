@@ -1,16 +1,53 @@
 ---
 title: 'Introduction'
-description: 'Background on the API'
+description: 'AI expert on any codebase, as an API'
 ---
 
-## Base URL
+Greptile indexes large repos and then answers hard questions about them in natural language. Think of it as an **AI expert on your codebase**, available as an API. 
+
+Example queries:
+
+1. "How does auth work in this codebase?"
+2. "Generate a comment for this PR with codebase context"
+3. "How would I add pagination to the `/retrieve` endpoint?"
+
+You can use the API in many ways: 
+1. Integrate with **Slack** to answer codebase questions.
+2. Integrate with **Sentry** to enrich alerts with codebase context, diagnoses, and resolution steps. 
+3. Integrate with **GitHub** to review PRs and comment on new issues. 
+
+We offer a growing list of [first-party integrations](https://app.greptile.com/apps), or you can use the API to build your own. 
+
+### Order of Operations
+<Steps>
+    <Step title="Index repo(s)">
+     Use [`POST /repositories`](/api-reference/index) to submit a repo to get indexed.
+    </Step>
+
+    <Step title="Query repos">
+       Use [`POST /query`](/api-reference/query) to query the repo or repos in natural language and get back an answer and a list of relevant files, functions, classes etc. 
+    </Step>
+
+    <Step title="Search repos">
+        Optionally, use [`POST /search`](/api-reference/query) to search the repo or repos in natural language and get back just the list of relevant files, functions, classes etc., not the answer. 
+    </Step>
+</Steps>
+
+### Base URL
 
 The base URL for all API requests is `https://api.greptile.com/v2/`.
 
-## Authentication
+### Authentication
+Twp tokens are required:
 
-Use a Greptile API key for user identification and authentication. Include the API key in the request header: `Authorization: Bearer <API_KEY>`.
+**Greptile API key**: 
 
-## Custom Headers
+Include the API key in the request header: `Authorization: Bearer <API_KEY>`.
+You can get your API key [here](https://app.greptile.com/api).
 
-`X-GitHub-Token`: Include this header with your GitHub access token for operations requiring GitHub access: `X-GitHub-Token: <GITHUB_TOKEN>`.
+**GitHub Token**: 
+
+Include this header with your GitHub/Gitlab access token for operations requiring GitHub access: 
+`X-GitHub-Token: <GITHUB_TOKEN>`.
+
+*Note: The read permissions on the GitHub/GitLab token determine which repos Greptile can reference in its answers.*
