@@ -29,9 +29,9 @@
   ],
   "anchors": [
     {
-      "name": "Greptile Home",
+      "name": "Docs Home",
       "icon": "house",
-      "url": "https://greptile.com"
+      "url": "/"
     },
     {
       "name": "Discord",
@@ -50,10 +50,14 @@
       "pages": ["introduction", "quickstart", "prompt-guide"]
     },
     {
-      "group": "Examples",
+      "group": "Apps & Integrations",
       "pages": [
-        "examples",
-        "examples/task-enricher"
+        "apps/slackbot",
+        "apps/linear",
+        "apps/github-issues",
+        "apps/github-pr",
+        "apps/zapier",
+        "examples"
       ]
     },
     {

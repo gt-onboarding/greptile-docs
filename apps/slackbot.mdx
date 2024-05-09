@@ -1,0 +1,27 @@
+---
+title: Slack
+description: 'Greptile can answer questions about your codebase in Slack'
+---
+
+You can interact with Greptile's Slackbot by:
+1. Directly messaging the Bot
+2. Invoking the Bot in a channel by mentioning `@greptile`
+3. Setting up to respond to all questions in a particular slack channel, usually `#engineering-support` or equivalent. 
+
+<Frame>
+    <img src="/images/slackbot.png" />
+</Frame>
+
+### Installation
+
+Click [here](https://app.greptile.com/apps/slack) to install the Slackbot. Once you have installed the bot, you can use the same link to configure the bot. 
+
+Configuration includes:
+1. Setting up triggers, for example `@mentions`, or all messages in a specific `#channel`.
+2. Setting reference repositories, so the bot can provide context-aware answers.
+3. *Optional*: Providing "special instructions" for the bot to follow, for example, "Answer in 1-2 sentences only".
+
+<Note>
+For Greptile to reference repos, they must first be **indexed**, which can be done by submitting them through the frontend [here](https://app.greptile.com/chat). 
+</Note>
+
