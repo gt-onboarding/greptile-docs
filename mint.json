@@ -52,6 +52,7 @@
     {
       "group": "Apps & Integrations",
       "pages": [
+        "apps/overview",
         "apps/slackbot",
         "apps/linear",
         "apps/github-issues",
