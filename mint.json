@@ -47,7 +47,12 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "prompt-guide"]
+      "pages": [
+        "introduction", 
+        "quickstart", 
+        "prompt-guide", 
+        "pricing"
+      ]
     },
     {
       "group": "Apps & Integrations",
