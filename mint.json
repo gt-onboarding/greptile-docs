@@ -58,10 +58,10 @@
       "group": "Apps & Integrations",
       "pages": [
         "apps/overview",
-        "apps/slackbot",
-        "apps/linear",
-        "apps/github-issues",
         "apps/github-pr",
+        "apps/github-issues",
+        "apps/linear",
+        "apps/slackbot",
         "apps/zapier",
         "examples"
       ]
