@@ -1,0 +1,54 @@
+---
+title: Code Review Bot
+description: 'Greptile reviews your pull/merge requests with codebase context-aware comments'
+---
+
+<Note>Both GitHub & GitLab supported</Note>
+
+Greptile's code review bot does two things: 
+
+1. summarizes the changes in the pull/merge request
+
+2. comments on specific file changes suggests potential issues and unforeseen consequences of the change. 
+
+### Why is it useful?
+
+Greptile's code review bot writes comments that:
+
+- Are context-aware, so can discuss the implications of the changes to the wider codebase.
+- Can address potential security or compliance issues produced by the changes. 
+- Summarize the changes with codebase context, making it far easier for a human reviewer to contextualize and parse the changes. 
+- Reference similar code or abstractions related to the changes that are already in the codebase, to prevent repition. 
+
+This means less time spent reviewing PRs or awaiting review, and more time spent writing code. 
+
+<Card href="https://github.com/twentyhq/twenty/pull/5718">
+Click here to see a sample PR review on `twentyhq/twenty`! ->
+</Card>
+
+*Example PR diff comment ->*
+<Frame>
+    <img src="/images/cr.png" />
+</Frame>
+
+### Installation
+
+Click [here](https://app.greptile.com/apps/) to install the PR Review bot. Once you have installed the bot, you can use the same link to configure the bot. 
+
+
+### Configuration
+
+
+Configuration options include:
+1. Setting up triggers, for example `@mentions`, or certain filters like workspace, project, team, or label.
+2. Setting target repositories for the bot to review PRs for. 
+3. Providing "special instructions" for the bot to follow, for example, "Include a section on compliance implications of the changes in the PR."
+4. Selecting certain criterion for the bot to evaluate each diff on, for example syntax issues, or style guide violations. 
+
+Greptile can be configured to trigger a review:
+1. For all PRs
+2. For PRs in certain workspaces, projects, teams, or labels
+3. For PRs that mention `@greptileai` in the body
+4. Every
+
+Click [here](https://app.greptile.com/apps/) to install the PR bot.
