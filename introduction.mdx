@@ -14,38 +14,74 @@ description: 'Say hello to the AI expert on any codebase.'
   alt="Hero Dark"
 />
 
+<h2>Quick Links</h2>
+<CardGroup cols={2}>
+  <Card
+    title="Greptile API Quickstart"
+    icon="rocket"
+    href="/quickstart"
+    >
+  </Card>
+
+    <Card
+    title="API Reference"
+    icon="book"
+    href="/api-reference/introduction"
+    >
+  </Card>
+
+    <Card
+      title="Prompt Guide"
+      icon="messages-question"
+      href="/prompt-guide"
+    >
+  </Card>
+
+    <Card
+      title="Code Review Bot"
+      icon="user-magnifying-glass"
+      href="/apps/cr"
+    >
+  </Card>
+
+</CardGroup>
+
+<h2>Welcome to Greptile</h2>
+
 Greptile is a platform that can search and understand complex codebases in natural language.
 
 There are broadly **three ways** to use Greptile -
 
-<CardGroup cols={3}>
-  <Card
+<Steps>
+  <Step
     title="LLM-powered codebase Q&A"
     icon="messages-question"
   >
     Chat with any codebase using our <a href="https://app.greptile.com">web app</a>, our VS Code plugin or in your terminal using our CLI, available via `npm i -g greptile`.
-  </Card>
+  </Step>
 
-    <Card
+    <Step
     title="Integrate with Slack, Linear, PRs and more"
     icon="plug"
   >
   Connect Greptile to [Slack](/apps/slackbot) to answer questions about your codebase. Add it to [Linear](/apps/linear) to add codebase-context to every issue. Add it to GitHub to [review your PRs](/apps/github-pr). 
- </Card>
+ </Step>
 
-  <Card
+  <Step
     title="Custom AI Developer tools"
     icon="screwdriver-wrench"
   >
     Build custom internal AI dev tools such as PR review bots, Slackbots, documentation updaters and more, with the power of full codebase context. See [examples](/examples)
-  </Card>
-</CardGroup>
+  </Step>
+</Steps>
 
 Regardless of how you use Greptile, the overall flow looks like this:
+<Steps>
+  <Step> **Obtain API key and GitHub token**: one-time, takes 5 minutes. API support for GitLab and Azure Devops is coming soon.</Step>
+  <Step> **Submit repository for indexing**: one-time, takes 5-50 minutes depending on codebase size, auto-updates index on every push.</Step>
+  <Step> **Query in natural language**: answers with full-codebase context in \<3 seconds, responses can be streamed.</Step>
 
-1. **Obtain API key and GitHub token**: one-time, takes 5 minutes. API support for GitLab and Azure Devops is coming soon.
-2. **Submit repository for indexing**: one-time, takes 5-50 minutes depending on codebase size, auto-updates index on every push.
-3. **Query in natural language**: answers with full-codebase context in \<3 seconds, responses can be streamed.
+</Steps>
 
 ## Motivation
 
