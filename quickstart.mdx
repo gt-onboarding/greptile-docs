@@ -35,7 +35,7 @@ You can use the `POST /repositories` endpoint to submit a repository indexing jo
         {
             "remote": "github",
             "repository": "pandas-dev/pandas",
-            "branch": "master"
+            "branch": "main"
             // ... see API reference for optional fields
         }
         ```
@@ -67,15 +67,15 @@ You can use the `POST /repositories` endpoint to submit a repository indexing jo
     -d '{
         "remote": "github",
         "repository": "pandas-dev/pandas",
-        "branch": "master"
+        "branch": "main"
     }'
   ```
 
   ```javascript node
-  const greptileApiKey = "your-greptile-api-key";
-  const githubToken = "your-github-token";
+  const greptile_api_key = "your-greptile-api-key";
+  const github_token = "your-github-token";
 
-  const repositoryPayload = {
+  const repository_payload = {
       remote: "github",
       repository: "pandas-dev/pandas"
   };
@@ -83,11 +83,11 @@ You can use the `POST /repositories` endpoint to submit a repository indexing jo
   fetch('https://api.greptile.com/v2/repositories', {
       method: 'POST',
       headers: {
-          'Authorization': `Bearer ${greptileApiKey}`,
-          'X-Github-Token': githubToken,
+          'Authorization': `Bearer ${greptile_api_key}`,
+          'X-Github-Token': github_token,
           'Content-Type': 'application/json'
       },
-      body: JSON.stringify(repositoryPayload)
+      body: JSON.stringify(repository_payload)
   })
   .then(response => response.json())
   .then(data => console.log(data))
@@ -98,19 +98,19 @@ You can use the `POST /repositories` endpoint to submit a repository indexing jo
   ```python python
   import requests
 
-  greptileApiKey = "your-greptile-api-key"
-  githubToken = "your-github-token"
+  greptile_api_key = "your-greptile-api-key"
+  github_token = "your-github-token"
 
   url = 'https://api.greptile.com/v2/repositories'
   headers = {
-      'Authorization': f'Bearer {greptileApiKey}',
-      'X-Github-Token': githubToken,
+      'Authorization': f'Bearer {greptile_api_key}',
+      'X-Github-Token': github_token,
       'Content-Type': 'application/json'
   }
   payload = {
       "remote": "github",
       "repository": "pandas-dev/pandas",
-      "branch": "master"
+      "branch": "main"
   }
 
   response = requests.post(url, json=payload, headers=headers)
@@ -128,26 +128,26 @@ You can use the `POST /repositories` endpoint to submit a repository indexing jo
   )
 
   func main() {
-    greptileApiKey := "your-greptile-api-key"
-    githubToken := "your-github-token"
+    greptile_api_key := "your-greptile-api-key"
+    github_token := "your-github-token"
 
-    repositoryData := map[string]string{
+    repository_data := map[string]string{
       "remote":     "github",
       "repository": "pandas-dev/pandas",
-      "branch": "master",
+      "branch": "main",
     }
-    repositoryPayload, _ := json.Marshal(repositoryData)
+    repository_payload, _ := json.Marshal(repository_data)
 
-    repositoryReq, _ := http.NewRequest("POST", "https://api.greptile.com/v2/repositories", bytes.NewBuffer(repositoryPayload))
-    repositoryReq.Header.Set("Authorization", fmt.Sprintf("Bearer %s", greptileApiKey))
-    repositoryReq.Header.Set("X-Github-Token", githubToken)
-    repositoryReq.Header.Set("Content-Type", "application/json")
+    repository_req, _ := http.NewRequest("POST", "https://api.greptile.com/v2/repositories", bytes.NewBuffer(repository_payload))
+    repository_req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", greptile_api_key))
+    repository_req.Header.Set("X-Github-Token", github_token)
+    repository_req.Header.Set("Content-Type", "application/json")
 
-    repositoryClient := &http.Client{}
-    repositoryResp, _ := repositoryClient.Do(repositoryReq)
-    defer repositoryResp.Body.Close()
+    repository_client := &http.Client{}
+    repository_resp, _ := repository_client.Do(repository_req)
+    defer repository_resp.Body.Close()
 
-    fmt.Println("Response Status:", repositoryResp.Status)
+    fmt.Println("Response Status:", repository_resp.Status)
   }
   ```
 </CodeGroup>
@@ -201,16 +201,16 @@ You can use the `GET /repositories/{repositoryId}` endpoint to check the status 
   ```
 
   ```javascript node
-  const greptileApiKey = "your-greptile-api-key";
-  const githubToken = "your-github-token";
+  const greptile_api_key = "your-greptile-api-key";
+  const github_token = "your-github-token";
 
-  const repositoryIdentifier = encodeURIComponent("github:main:pandas-dev/pandas");
+  const repository_identifier = encodeURIComponent("github:main:pandas-dev/pandas");
 
-  fetch(`https://api.greptile.com/v2/repositories/${repositoryIdentifier}`, {
+  fetch(`https://api.greptile.com/v2/repositories/${repository_identifier}`, {
       method: 'GET',
       headers: {
-          'Authorization': `Bearer ${greptileApiKey}`,
-          'X-Github-Token': githubToken
+          'Authorization': `Bearer ${greptile_api_key}`,
+          'X-Github-Token': github_token
       }
   })
   .then(response => response.json())
@@ -221,15 +221,15 @@ You can use the `GET /repositories/{repositoryId}` endpoint to check the status 
   ```python python
   import requests
 
-  greptileApiKey = "your-greptile-api-key"
-  githubToken = "your-github-token"
+  greptile_api_key = "your-greptile-api-key"
+  github_token = "your-github-token"
 
-  repositoryIdentifier = "github%3Amain%3Apandas-dev%2Fpandas"
+  repository_identifier = "github%3Amain%3Apandas-dev%2Fpandas"
 
-  url = f'https://api.greptile.com/v2/repositories/{repositoryIdentifier}'
+  url = f'https://api.greptile.com/v2/repositories/{repository_identifier}'
   headers = {
-      'Authorization': f'Bearer {greptileApiKey}',
-      'X-Github-Token': githubToken
+      'Authorization': f'Bearer {greptile_api_key}',
+      'X-Github-Token': github_token
   }
 
   response = requests.get(url, headers=headers)
@@ -246,23 +246,23 @@ You can use the `GET /repositories/{repositoryId}` endpoint to check the status 
   )
 
   func main() {
-    greptileApiKey := "your-greptile-api-key"
-    githubToken := "your-github-token"
+    greptile_api_key := "your-greptile-api-key"
+    github_token := "your-github-token"
 
-    repositoryIdentifier := "github%3Amain%3Apandas-dev%2Fpandas"
+    repository_identifier := "github%3Amain%3Apandas-dev%2Fpandas"
 
-    repositoryReq, _ := http.NewRequest("GET", fmt.Sprintf("https://api.greptile.com/v2/repositories/%s", repositoryIdentifier), nil)
-    repositoryReq.Header.Set("Authorization", fmt.Sprintf("Bearer %s", greptileApiKey))
-    repositoryReq.Header.Set("X-Github-Token", githubToken)
-    repositoryReq.Header.Set("Content-Type", "application/json")
+    repository_req, _ := http.NewRequest("GET", fmt.Sprintf("https://api.greptile.com/v2/repositories/%s", repository_identifier), nil)
+    repository_req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", greptile_api_key))
+    repository_req.Header.Set("X-Github-Token", github_token)
+    repository_req.Header.Set("Content-Type", "application/json")
 
-    repositoryClient := &http.Client{}
-    repositoryResp, _ := repositoryClient.Do(repositoryReq)
-    defer repositoryResp.Body.Close()
+    repository_client := &http.Client{}
+    repository_resp, _ := repository_client.Do(repository_req)
+    defer repository_resp.Body.Close()
 
-    body, _ := ioutil.ReadAll(repositoryResp.Body)
-    bodyString := string(body)
-    fmt.Println(bodyString)
+    body, _ := ioutil.ReadAll(repository_resp.Body)
+    body_string := string(body)
+    fmt.Println(body_string)
   }
   ```
 
@@ -294,7 +294,7 @@ Now, you can send natural language queries to Greptile! To do this, use the `POS
         {
             "messages": [
                 {
-                    "id": "some-id-1",
+                    "id": "some-id-1", // optional, unique identifier for the message
                     "content": "Where's the code responsible for concatenating dataframes?",
                     "role": "user"
                 }
@@ -306,7 +306,7 @@ Now, you can send natural language queries to Greptile! To do this, use the `POS
                     "branch": "main"
                 }
             ],
-            "sessionId": "test-session-id",
+            "sessionId": "test-session-id", // optional
             // "stream": true // optional, set to true to stream results
         }
         ```
@@ -469,7 +469,7 @@ Now, you can send natural language queries to Greptile! To do this, use the `POS
                 "branch": "main"
             }
         ],
-        "sessionId": "test-session-id"
+        "sessionId": "test-session-id" // optional
     }'
   ```
 
@@ -492,7 +492,7 @@ Now, you can send natural language queries to Greptile! To do this, use the `POS
               branch: "main"
           }
       ],
-      sessionId: "test-session-id"
+      sessionId: "test-session-id" // optional
   };
 
   fetch('https://api.greptile.com/v2/query', {
@@ -536,7 +536,7 @@ Now, you can send natural language queries to Greptile! To do this, use the `POS
               "branch": "main"
           }
       ],
-      "sessionId": "test-session-id"
+      "sessionId": "test-session-id" // optional
   }
 
   response = requests.post(url, json=payload, headers=headers)
@@ -572,7 +572,7 @@ Now, you can send natural language queries to Greptile! To do this, use the `POS
           "branch": "main",
         },
       },
-      "sessionId": "test-session-id",
+      "sessionId": "test-session-id",  // optional
     }
     queryPayload, _ := json.Marshal(queryData)
 
