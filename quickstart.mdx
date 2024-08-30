@@ -29,8 +29,9 @@ You can use the `POST /repositories` endpoint to submit a repository indexing jo
         ```json
         // POST https://api.greptile.com/v2/repositories
         // Headers:
-        //   Authorization: Bearer {greptileApiKey}
-        //   X-Github-Token: {githubToken}
+        //   Authorization: Bearer {GREPTILE_API_KEY}
+        //   X-Github-Token: {GITHUB_TOKEN}
+        //   Content-Type: application/json
 
         {
             "remote": "github",
@@ -163,8 +164,9 @@ You can use the `GET /repositories/{repositoryId}` endpoint to check the status 
         ```json
         // GET https://api.greptile.com/v2/repositories/github%3Amain%3Apandas-dev%2Fpandas
         // Headers:
-        //   Authorization: Bearer {greptileApiKey}
-        //   X-Github-Token: {githubToken}
+        //   Authorization: Bearer {GREPTILE_API_KEY}
+        //   X-Github-Token: {GITHUB_TOKEN}
+        //   Content-Type: application/json
         ```
     </Accordion>
 
@@ -288,8 +290,9 @@ Now, you can send natural language queries to Greptile! To do this, use the `POS
         ```json
         // POST https://api.greptile.com/v2/query
         // Headers:
-        //   Authorization: Bearer {greptileApiKey}
-        //   X-Github-Token: {githubToken}
+        //   Authorization: Bearer {GREPTILE_API_KEY}
+        //   X-Github-Token: {GITHUB_TOKEN}
+        //   Content-Type: application/json
 
         {
             "messages": [
@@ -512,13 +515,13 @@ Now, you can send natural language queries to Greptile! To do this, use the `POS
   ```python python
   import requests
 
-  greptileApiKey = "your-greptile-api-key"
-  githubToken = "your-github-token"
+  greptile_api_key = "your-greptile-api-key"
+  github_token = "your-github-token"
 
   url = 'https://api.greptile.com/v2/query'
   headers = {
-      'Authorization': f'Bearer {greptileApiKey}',
-      'X-Github-Token': githubToken,
+      'Authorization': f'Bearer {greptile_api_key}',
+      'X-Github-Token': github_token,
       'Content-Type': 'application/json'
   }
   payload = {
