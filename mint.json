@@ -25,8 +25,7 @@
     "name": "Get API Key",
     "url": "https://app.greptile.com/api"
   },
-  "tabs": [
-  ],
+  "tabs": [],
   "anchors": [
     {
       "name": "Docs Home",
@@ -58,7 +57,7 @@
       "group": "Apps & Integrations",
       "pages": [
         "apps/overview",
-        "apps/cr",
+        "apps/code-review",
         "apps/github-issues",
         "apps/linear",
         "apps/slackbot",
@@ -78,6 +77,12 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/apps/cr",
+      "destination": "/apps/code-review"
+    }
+  ],
   "openapi": ["openapi.yml"],
   "footerSocials": {
     "twitter": "https://twitter.com/greptileai",
@@ -86,8 +91,7 @@
   },
   "analytics": {
     "posthog": {
-        "apiKey": "phc_qh8L3NKZ4JP6pOLRnuF3UkkUVjmktWW1mR8WfiIvWyi"
+      "apiKey": "phc_qh8L3NKZ4JP6pOLRnuF3UkkUVjmktWW1mR8WfiIvWyi"
     }
-}
-
+  }
 }
