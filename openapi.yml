@@ -98,6 +98,9 @@ components:
         response:
           type: string
           description: Processing status message.
+        statusEndpoint:
+          type: string
+          description: URL to check the status of the repository processing.
 
     RepositoryInfo:
       type: object
