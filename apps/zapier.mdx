@@ -1,8 +1,10 @@
 ---
 title: Zapier
 description: 'An example of how to integrate Greptile with Linear using Zapier'
+keywords: 'AI code analysis, Zapier integration, Linear integration, task management, developer productivity, automated insights'
+metaTitle: 'Greptile AI + Zapier + Linear: Automated Code Context for Tasks'
+metaDescription: Enhance your Linear tasks with AI-powered code context using Greptile and Zapier. Automate codebase insights for improved developer productivity and task comprehension.'
 ---
-
 
 <Note>
     We now have a first party integration with Linear! Check it out [here](https://app.greptile.com/). 
@@ -11,13 +13,13 @@ description: 'An example of how to integrate Greptile with Linear using Zapier'
 
 
 ## Greptile + Linear
-    <img src="/images/task-enricher/hero.png" />
+    <img src="/images/task-enricher/hero.png" alt="Greptile and Linear integration illustration" />
 As a software engineer I would often feel lost when I first looked at a ticket assigned to me.
 Today, we will integrate Greptile with your task manager (in this example, [Linear](https://linear.app)) so every time a new ticket is created, Greptile will add a comment with context from the codebase, including specific file paths relevant to the task.
 
 Here's what that will look like:
 <Frame>
-    <img src="/images/task-enricher/gitlab.png" />
+    <img src="/images/task-enricher/gitlab.png" alt="Example of Greptile's AI-generated comment on a GitLab issue" />
 </Frame>
 
 ---
@@ -41,7 +43,7 @@ Here's what that will look like:
 Add event blocks exactly as shown in this image:
 
 <Frame>
-    <img src="/images/task-enricher/map.png"/>
+    <img src="/images/task-enricher/map.png" alt="Zapier workflow map for Greptile and Linear integration"/>
 </Frame>
 
 1. **New Issue in Linear:** This block is triggered when a new issue is created in Linear. You will need to follow instructions in this block to connect your Linear account.
@@ -54,13 +56,13 @@ Add event blocks exactly as shown in this image:
 
 #### Set `Event` to `Custom Request`
 <Frame>
-    <img src="/images/task-enricher/event.png"/>
+    <img src="/images/task-enricher/event.png" alt="Zapier Custom Request configuration for Greptile API"/>
 </Frame>
 
 #### Configure Request Options
 URL -> `https://app.greptile.com/v2/query`
 <Frame>
-    <img src="/images/task-enricher/method.png"/>
+    <img src="/images/task-enricher/method.png" alt="Zapier request method configuration for Greptile API"/>
 </Frame>
 
 #### Paste this object into `body` and insert the Linear `title` and `description`
