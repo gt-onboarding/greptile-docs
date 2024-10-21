@@ -92,6 +92,9 @@
   "analytics": {
     "posthog": {
       "apiKey": "phc_qh8L3NKZ4JP6pOLRnuF3UkkUVjmktWW1mR8WfiIvWyi"
+    },
+    "koala": {
+      "publicApiKey": "pk_60d31be3082b15278669ecd6230f689fd5d4"
     }
   }
 }
