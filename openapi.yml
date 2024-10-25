@@ -95,7 +95,7 @@ components:
     RepositoryResponse:
       type: object
       properties:
-        response:
+        message:
           type: string
           description: Processing status message.
         statusEndpoint:
@@ -119,10 +119,6 @@ components:
           type: integer
         numFiles:
           type: integer
-        sampleQuestions:
-          type: array
-          items:
-            type: string
         sha:
           type: string
 
