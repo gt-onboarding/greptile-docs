@@ -30,7 +30,7 @@
     {
       "name": "Docs Home",
       "icon": "house",
-      "url": "/"
+      "url": "https://docs.greptile.com/introduction"
     },
     {
       "name": "Discord",
@@ -69,7 +69,6 @@
       "group": "API Reference",
       "pages": [
         "api-reference/introduction",
-        "api-reference/get-session",
         "api-reference/index",
         "api-reference/get-repository",
         "api-reference/query",
