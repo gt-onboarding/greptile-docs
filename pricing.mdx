@@ -12,17 +12,17 @@ metaDescription: 'Explore Greptile pricing options for AI-powered code analysis.
 
 Greptile chat is the web-based chat interface that allows you to interact with Greptile. There are three plans available:
 
-| Property | Free | Pro | Business |
-| -------- | ------------------- | ------------------- | ------------------- |
-| Price     | $0 ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ |      $20/mo/seat | $40/mo/seat |
-| Repo size limit      | 10MB       |   ∞     |   ∞ |
-| Private repos     | -      |   ✓    |  ✓ |
-| Add your team    | -      |   ✓    |  ✓ |
-| Share sessions     | -      |   ✓ |  ✓ |
-| Multiple repos in chat     | -      |   ✓    |  ✓ |
-| Email Support     | -      |   48 hr    |  12 hr |
-| Shared Slack channel     | -      |   -    |  ✓ |
-| SOC2 compliance     | -      |   -    |  ✓ |
+| Property | Free | Pro |
+| -------- | ------------------- | ------------------- |
+| Price     | $0 ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ ‌ |      $20/mo/seat |
+| Repo size limit      | 10MB       |   ∞     |
+| Private repos     | -      |   ✓    |
+| Add your team    | -      |   ✓    |
+| Share sessions     | -      |   ✓ |
+| Multiple repos in chat     | -      |   ✓    |
+| Email Support     | -      |   48 hr    |
+| Shared Slack channel     | -      |   -    |
+| SOC2 compliance     | -      |   -    |
 
 
 <Note>While the Pro and Business tiers are both SOC2 compliant, we only share reports, undergo security review, and share other security details to Business tier customers. </Note>
@@ -33,13 +33,17 @@ Greptile API is priced per "unit", which costs $0.15. The only endpoints with a 
 
 A call to `POST /query` is 1 unit.
 
-A call to `POST /query` with parameter `genius=true`, which uses a larger, more powerful model suitable for complex tasks such as PR reviews, is 3 units.
+A call to `POST /query` with parameter `genius=true`, which uses a larger, more powerful model suitable for complex tasks such as diagnosing bugs, is 3 units.
 
-## Greptile Integrations
+## Greptile Code Review Bot
 
-Greptile integrations include the PR review bot, the issue bot, Linear, and Slackbots. They are priced per API call. 
+The Greptile Code Review Bot is priced \$0.45 per file changed up to $50/developer/month, past which usage is free. 
 
-For example, enriching one Linear or GitHub issue consumes a single API call.
+### Example
 
-Reviewing one changed file in a PR consumes a single API call. A large PR might consume several. 
+If your team comprises 4 developers that open many PRs per week, and perhaps an engineering manager that opens one PR with 5 files changed that month, the bill for the month will be no more than:
 
+$$50 * 4 + 0.45 * 5 = 202.25$$
+
+
+For questions, reach out to support@greptile.com.
