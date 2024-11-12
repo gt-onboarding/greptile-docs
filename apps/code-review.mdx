@@ -9,48 +9,99 @@ metaDescription: Enhance your code review process with Greptile AI-powered bot. 
 <Note>Both GitHub & GitLab supported</Note>
 
 Greptile's code review bot does two things:
+<Steps>
+<Step>
+Install bot by clicking [here](https://app.greptile.com/)
+</Step>
+<Step>
+Select the repos you would like the bot to review new PRs on.
+</Step>
+<Step>
+Greptile summarizes the changes in the pull/merge request
 
-1. summarizes the changes in the pull/merge request
+<Frame>
+  <img src="/images/cr-bot/summary.png" alt="Example of Greptile AI code review summary" />
+  <figcaption>Example of Greptile AI code review summary</figcaption>
+</Frame>
+</Step>
+<Step>
+Greptile comments on specific file changes and suggests potential issues and unforeseen consequences of the change.
 
-2. comments on specific file changes suggests potential issues and unforeseen consequences of the change.
+<Frame>
+  <img src="/images/cr-bot/cr-comment.png" alt="Example of Greptile AI code review comments" />
+  <figcaption>Example of Greptile AI code review comments</figcaption>
+</Frame>
+</Step>
+</Steps>
 
 ### Why is it useful?
 
 Greptile's code review bot writes comments that:
 
-- Are context-aware, so can discuss the implications of the changes to the wider codebase.
-- Can address potential security or compliance issues produced by the changes.
 - Summarize the changes with codebase context, making it far easier for a human reviewer to contextualize and parse the changes.
+- Are context-aware, so can discuss the implications of the changes to the wider codebase.
+- Can identify potential performance,security or compliance issues produced by the changes.
 - Reference similar code or abstractions related to the changes that are already in the codebase, to prevent repitition.
+- Enforces your custom style guide and prescribed patterns.
 
-This means less time spent reviewing PRs or awaiting review, and more time spent writing code.
+This means:
+1. Less time spent reviewing PRs or awaiting review, and more time spent writing code.
+2. More bugs caught that humans might miss.
+3. A human reviewer can focus on the "big picture" and "strategic" aspects of the changes, while the bot can focus on the "tactical" aspects.
+
 
 <Card href="https://github.com/twentyhq/twenty/pull/5718">
   Click here to see a sample PR review on `twentyhq/twenty`! ->
 </Card>
 
-_Example PR diff comment ->_
-
-<Frame>
-  <img src="/images/cr.png" alt="Example of Greptile AI code review comment" />
-</Frame>
 
 ### Installation
 
 Click [here](https://app.greptile.com/) to install the PR Review bot.
 
-### Configuration
+### Trigger
 
-Configuration options include:
+By default, Greptile reviews evert new PR when it is first opened or when a user comments `@greptileai` on the PR. It can also be configured to review PRs on certain triggers.
+- Trigger only on new PRs withcertain labels.
+- Trigger on all new commits pushed to a PR branch.
+- Do not trigger on PRs with a certain label or containing some specific keyword in the title or description.
 
-1. Setting up triggers, for example `@mentions`, or certain filters like workspace, project, team, or label.
-2. Setting target repositories for the bot to review PRs for.
-3. Providing "special instructions" for the bot to follow, for example, "Include a section on compliance implications of the changes in the PR."
-4. Selecting certain criterion for the bot to evaluate each diff on, for example syntax issues, or style guide violations.
+<Frame>
+  <img src="/images/cr-bot/manual-trigger.gif" alt="Example of Greptile AI code review trigger" />
+  <figcaption>Example of Greptile AI code review trigger</figcaption>
+</Frame>
 
-Greptile can be configured to trigger a review:
+### Conversation
 
-1. For all PRs
-2. For PRs in certain workspaces, projects, teams, or with certainlabels
-3. For PRs that mention `@greptileai` in the body
-4. Every time a new commit is made on a PR branch
+You can ask Greptile for fix suggestions or ask follow up questions by replying to its comments in format `@greptileai <your question>`.
+
+<Frame>
+  <img src="/images/cr-bot/qna.gif" alt="Example of Greptile AI code review conversation" />
+  <figcaption>Example of Greptile AI code review conversation</figcaption>
+</Frame>
+
+### Reinforcement Learning
+
+Greptile learns from your feedback when you react with `👍` or `👎` to its comments. 
+<Frame>
+  <img src="/images/cr-bot/downvote.gif" alt="Example of Greptile AI code review reaction" />
+  <figcaption>Example of Greptile AI code review reaction</figcaption>
+</Frame>
+
+### Customization
+
+You can customize the bot's behavior by providing "special instructions" for the bot to follow, for example, "Include a section on compliance implications of the changes in the PR."
+
+<Frame>
+  <img src="/images/cr-bot/sysprompt.gif" alt="Example of Greptile AI code review customization" />
+  <figcaption>Example of Greptile AI code review customization</figcaption>
+</Frame>
+
+You can also customize the bot's behavior by selecting certain criterion for the bot to evaluate each diff on, for example syntax issues, or style guide violations.
+
+<Frame>
+  <img src="/images/cr-bot/labels.gif" alt="Example of Greptile AI code review criterion" />
+  <figcaption>Example of Greptile AI code review criterion</figcaption>
+</Frame>
+
+That's it! If you have any questions, feel free to reach out to us at support@greptile.com.
