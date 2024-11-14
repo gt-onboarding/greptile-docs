@@ -19,6 +19,13 @@ metaDescription: 'Leverage AI for code analysis and reviews with Greptile. Get e
 
 <h2>Quick Links</h2>
 <CardGroup cols={2}>
+    <Card
+      title="Code Review Bot"
+      icon="user-magnifying-glass"
+      href="/apps/code-review"
+    >
+  </Card>
+
   <Card
     title="Greptile API Quickstart"
     icon="rocket"
@@ -40,24 +47,24 @@ metaDescription: 'Leverage AI for code analysis and reviews with Greptile. Get e
     >
   </Card>
 
-    <Card
-      title="Code Review Bot"
-      icon="user-magnifying-glass"
-      href="/apps/code-review"
-    >
-  </Card>
-
 </CardGroup>
 
 <h2>Welcome to Greptile</h2>
 
-Greptile is a platform that can search and understand complex codebases in natural language.
+Greptile is AI that understands your codebase and can do things like review PRs, diagnose failing tests, and integrate with your SDLC via simple API. 
 
-There are broadly **three ways** to use Greptile -
+Some ways in which teams use Greptile:
 
 <Steps>
   <Step
-    title="LLM-powered codebase Q&A"
+    title="AI-powered code reviews"
+    icon="user-magnifying-glass"
+  >
+    Greptile generates descriptions for your PRs and leaves  in-line comments identifying bugs, anti-patterns, repeated code, and more.s
+  </Step>
+
+  <Step
+    title="Chat with your codebase"
     icon="messages-question"
   >
     Chat with any codebase using our <a href="https://app.greptile.com">web app</a>, our VS Code plugin or in your terminal using our CLI, available via `npm i -g greptile`.
@@ -78,13 +85,6 @@ There are broadly **three ways** to use Greptile -
   </Step>
 </Steps>
 
-Regardless of how you use Greptile, the overall flow looks like this:
-<Steps>
-  <Step> **Obtain API key and GitHub token**: one-time, takes 5 minutes. API support for GitLab and Azure Devops is coming soon.</Step>
-  <Step> **Submit repository for indexing**: one-time, takes 5-50 minutes depending on codebase size, auto-updates index on every push.</Step>
-  <Step> **Query in natural language**: answers with full-codebase context in \<3 seconds, responses can be streamed.</Step>
-
-</Steps>
 
 ## Motivation
 
@@ -98,17 +98,17 @@ Here are some examples of internal tools you can build for your team with Grepti
 
 <Steps>
   <Step
-    title="Codebase Expert Slackbot"
+    title="Incident assistant"
     icon="slack"
   >
-    Build an expert on your codebase that answers questions in your Slack!
+    Pass in Sentry alerts into Greptile, it generates a diagnostic report with context of your codebase.
   </Step>
 
   <Step
-    title="PR Review Bot"
+    title="Failed Test Diagnosis Bot"
     icon="user-magnifying-glass"
   >
-    Build a bot that writes thoughtful, codebase context-aware comments on your team's PRs.
+  Pass in outupt of failed tests in GitHub Actions into Greptile's API and get a diagnosis on why the test failed.
   </Step>
 
   <Step
