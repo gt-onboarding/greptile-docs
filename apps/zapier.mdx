@@ -6,124 +6,99 @@ metaTitle: 'Greptile AI + Zapier + Linear: Automated Code Context for Tasks'
 metaDescription: Enhance your Linear tasks with AI-powered code context using Greptile and Zapier. Automate codebase insights for improved developer productivity and task comprehension.'
 ---
 
-<Note>
-    Greptile is now natively integrated with Zapier, see [here](https://zapier.com/apps/greptile/integrations) for more details.
-</Note>
 
+Greptile natively integrates with Zapier. See [here](https://zapier.com/apps/greptile/integrations) to get started. 
 
-## Greptile + Linear
-    <img src="/images/task-enricher/hero.png" alt="Greptile and Linear integration illustration" />
-As a software engineer I would often feel lost when I first looked at a ticket assigned to me.
-Today, we will integrate Greptile with your task manager (in this example, [Linear](https://linear.app)) so every time a new ticket is created, Greptile will add a comment with context from the codebase, including specific file paths relevant to the task.
-
-Here's what that will look like:
 <Frame>
-    <img src="/images/task-enricher/gitlab.png" alt="Example of Greptile's AI-generated comment on a GitLab issue" />
-</Frame>
+    <img src="/images/greptile-zapier.png" alt="Greptile + Zapier Example" />
+</ Frame>
 
----
+## Overview and Examples
 
-### Set up Zapier
+Greptile + Zapier allows you to quickly integrate Greptile into your developer tools to make them smarter. 
+
+The input is a prompt and one or more repositories, the output is a response with context from those repositories as well as links to specific locations in the code.
+
+Some examples of how you could use it:
+1. When a new issue is created in ClickUp, send the issue description to Greptile. Greptile will generate a codebase context-aware comment to help the developer get started with the ticket.
+2. When a test fails in GitHub Actions, Greptile can generate a diagnosis with context from the codebase.
+3. When there is a Sentry Alert, Greptile can generate a root cause analysis with context from the codebase.
+
+## Authentication
+
+To authenticate Greptile, you need a Greptile API key and a GitHub token.
 
 <Steps>
-    <Step title="Create a Zapier account">
-        Go to [zapier.com](https://zapier.com) and create an account.
-    </Step>
+    <Step>
+        Greptile API key can be provisioned [here](https://app.greptile.ai/settings/api).
+    </ Step>
+    <Step>
+        GitHub token can be provisioned [here](https://github.com/settings/tokens). Ensure it has access to the target repositories.
+    </ Step>
+</ Steps>
 
-    <Step title="Create a new Zap">
-        Click on the **+ Create** button and select **Zaps**
-    </Step>
-</Steps>
+<Note>
+    Greptile API Key must be formatted in the field as `Bearer api_key`.
+</ Note>
 
----
+## Input and Output Formats
 
-### Add Blocks
+The input is a `messages` array that contains the prompt and history of prompts/responses for conversational usecases as well as a `repositories` array that contains the repositories to reference.
 
-Add event blocks exactly as shown in this image:
+The output is a `json` with `message` and `sources`. 
 
-<Frame>
-    <img src="/images/task-enricher/map.png" alt="Zapier workflow map for Greptile and Linear integration"/>
-</Frame>
+**Sample Input:**
 
-1. **New Issue in Linear:** This block is triggered when a new issue is created in Linear. You will need to follow instructions in this block to connect your Linear account.
-2. **Webhooks, Custom Request:** This is where the request to the Greptile API is made. More detail on this below.
-3. **Formatter:** This is to separate the filepaths returned by the Greptile API with newlines.
-4. **Create Comment in Linear**: This adds the Greptile comment to the original Linear task that triggered this run.
+`messages`:
+```json
+[
+    {
+        "content": "Diagnose this bug: `${stack_trace}`",
+        "role": "user",
+        "id": "0000"
+    }
+]
+```
 
-### Calling the Greptile API
+`repositories`:
+```json
+[
+      {
+         "repository":"helicone/helicone",
+         "remote":"github",
+         "branch":"main"
+      }
+]
+```
 
+**Sample Output:**
 
-#### Set `Event` to `Custom Request`
-<Frame>
-    <img src="/images/task-enricher/event.png" alt="Zapier Custom Request configuration for Greptile API"/>
-</Frame>
-
-#### Configure Request Options
-URL -> `https://app.greptile.com/v2/query`
-<Frame>
-    <img src="/images/task-enricher/method.png" alt="Zapier request method configuration for Greptile API"/>
-</Frame>
-
-#### Paste this object into `body` and insert the Linear `title` and `description`
-
-This is what you should paste in:
+The output looks something like this:
 ```json
 {
-   "messages":[
-      {
-         "id": "00000", // optional
-         "content":"Generate 3 extremely concise bullet point instructions for the following task.",
-         "role":"system"
-      },
-      {
-         "id": "00001", // optional
-         // Use "Insert Data ..." here
-         "content":"[INSERT_LINEAR_TASK_TITLE]: [INSERT_LINEAR_TASK_DESC]",
-         "role":"user"
-      }
-   ],
-   "repositories":[
-      {
-         "repository":"YOUR_GITHUB_USERNAME/YOUR_REPO_1",
-         "branch":"main"
-      },
-      {
-         "repository":"YOUR_GITHUB_USERNAME/YOUR_REPO_2",
-         "branch":"main"
-      },
-      ...
-   ]
+    "message": "Based on the code, there are several potential reasons why ClickHouse writes might be failing: ...",
+    "sources": [
+        {
+            "repository": "helicone/helicone",
+            "remote": "github", 
+            "branch": "main",
+            "filepath": "/valhalla/jawn/src/lib/db/ClickhouseWrapper.ts",
+            "linestart": 82,
+            "lineend": 92,
+            "summary": "The `ClickhouseWrapper.ts` file contains the implementation of the...",
+            "distance": 0.2171129350993909
+        },
+        {
+            "remote": "github",
+            "remoteUrl": null,
+            "branch": "main",
+            "repository": "helicone/helicone", 
+            "filepath": "/valhalla/jawn/src/lib/db/ClickhouseWrapper.ts",
+            "linestart": 1,
+            "lineend": 80,
+            "summary": "The `ClickhouseWrapper.ts` file contains the implementation of the...",
+            "distance": 0
+        }
+    ]
 }
 ```
-Once you insert the data from the Linear event block, it should look like this:
-<Frame>
-    <img src="/images/task-enricher/body.png"/>
-</Frame>
-
-#### Authenticate
-Configure the headers like this:
-<Frame>
-    <img src="/images/task-enricher/auth.png"/>
-</Frame>
-
-1. Get your Greptile API key [here](https://app.greptile.com/)
-2. Get your GitHub Access Token [here](https://github.com/settings/tokens)
-
-Remember to add `"Bearer"` to the `Authorization` header value.
-
-#### Format and Add Linear Comment
-
-Easy last step, configure the final two blocks.
-
-1. **Format**: This is optional, but I wanted my source filepaths to show up as newline seperated, so I used `Formatter` to do that.
-2. **Add Comment**: In this Linear block, simply configure it with the `Issue Id` of the original task, and add the `message` from the Greptile API as the body.
-
-This is what that should look like:
-
-<Frame>
-    <img src="/images/task-enricher/comment.png"/>
-</Frame>
-
-That's it! Test the Zap and within 20-25 seconds of creating a new ticket in Linear, you should see a comment from Greptile adding helpful context!
-
-Build this yourself? [Tell us](mailto:hello@greptile.com) and we'll send you free Greptile swag!
