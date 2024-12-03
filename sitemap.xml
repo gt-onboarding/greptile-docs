@@ -2,67 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Documentation pages -->
   <url>
-    <loc>https://greptile.com/docs/introduction</loc>
+    <loc>https://www.greptile.com/docs/introduction</loc>
     <lastmod>2024-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/examples</loc>
+    <loc>https://www.greptile.com/docs/examples</loc>
     <lastmod>2024-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/prompt-guide</loc>
+    <loc>https://www.greptile.com/docs/prompt-guide</loc>
     <lastmod>2024-09-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/quickstart</loc>
+    <loc>https://www.greptile.com/docs/quickstart</loc>
     <lastmod>2024-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/pricing</loc>
+    <loc>https://www.greptile.com/docs/pricing</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/apps/overview</loc>
+    <loc>https://www.greptile.com/docs/apps/overview</loc>
     <lastmod>2024-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/apps/cr</loc>
+    <loc>https://vgreptile.com/docs/apps/cr</loc>
     <lastmod>2024-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/apps/github-issues</loc>
+    <loc>https://www.greptile.com/docs/apps/github-issues</loc>
     <lastmod>2024-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/apps/zapier</loc>
+    <loc>https://www.greptile.com/docs/apps/zapier</loc>
     <lastmod>2024-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/apps/linear</loc>
+    <loc>https://www.greptile.com/docs/apps/linear</loc>
     <lastmod>2024-09-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/apps/slackbot</loc>
+    <loc>https://www.greptile.com/docs/apps/slackbot</loc>
     <lastmod>2024-09-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -70,37 +70,37 @@
   
   <!-- API Reference pages -->
   <url>
-    <loc>https://greptile.com/docs/api-reference/index</loc>
+    <loc>https://www.greptile.com/docs/api-reference/index</loc>
     <lastmod>2024-09-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/api-reference/introduction</loc>
+    <loc>https://www.greptile.com/docs/api-reference/introduction</loc>
     <lastmod>2024-09-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/api-reference/get-repository</loc>
+    <loc>https://www.greptile.com/docs/api-reference/get-repository</loc>
     <lastmod>2024-09-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/api-reference/get-session</loc>
+    <loc>https://www.greptile.com/docs/api-reference/get-session</loc>
     <lastmod>2024-09-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/api-reference/search</loc>
+    <loc>https://www.greptile.com/docs/api-reference/search</loc>
     <lastmod>2024-09-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://greptile.com/docs/api-reference/query</loc>
+    <loc>https://www.greptile.com/docs/api-reference/query</loc>
     <lastmod>2024-09-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
