@@ -104,6 +104,44 @@ You can also customize the bot's behavior by selecting certain criterion for the
   <figcaption>Example of Greptile AI code review criterion</figcaption>
 </Frame>
 
-That's it! If you have any questions, feel free to reach out to us at support@greptile.com.
+### Per-repo config and patterns repos with `greptile.json`
+
+You can have custom settings for any repo by adding a `greptile.json` file to the root of the repo. 
+You can grab the your global settings in the correct format [here](https://app.greptile.com/review/) by clicking on the `copy` or `download` icons on the top right of the Settings panel. 
+
+```json greptile.json
+{
+  "labels": [
+    "feature",
+    "bug"
+  ],
+  "comment": "Disclaimer: This is AI-generated.",
+  "commentTypes": [
+    "logic",
+    "syntax"
+  ],
+  "instructions": "Ensure style_guide.md is enforced.",
+  "ignoreKeywords": "rename\nlinter\nprettier\ngreptile-ignor",
+  "ignorePatterns": "node_modules",
+  "patternRepositories": ["acme/backend"],
+  "triggerOnUpdates": true,
+  "shouldUpdateDescription": false,
+  "disabledLabels": [
+    "docs"
+  ],
+  "includeAuthors": [
+    "dakshgup",
+    "schoi"
+  ],
+  "excludeAuthors": [
+    "cool-dev"
+  ]
+}
+```
+
+**Patterns repos**
+
+In the `greptile.json` file, you can specify a `patternsRepo` field with repos related to the one being reviewed that might add helpful context. 
+An example is adding a frontend repo to a backend repo's `greptile.json` file so that the bot can reference frontend code when reviewing backend code.
 
 To learn more, see [greptile.com/code-review-bot](https://greptile.com/code-review-bot).
