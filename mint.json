@@ -74,6 +74,10 @@
         "api-reference/get-repository",
         "api-reference/query"
       ]
+    },
+    {
+      "group": "Self-Hosting",
+      "pages": ["selfhost"]
     }
   ],
   "redirects": [

@@ -1,0 +1,76 @@
+---
+title: Self-Hosted Greptile
+description: 'Deploy Greptile in your own infrastructure with full control and customization'
+---
+<Frame>
+  <img
+    className="dark:hidden"
+    src="/images/selfhost-light.svg"
+    alt="Self-hosted Greptile architecture diagram"
+  />
+  <img
+    className="hidden dark:block" 
+    src="/images/selfhost-dark.svg"
+    alt="Self-hosted Greptile architecture diagram"
+  />
+</Frame>
+
+# Overview
+
+Greptile is AI that understands your codebase and can do things like review PRs, generate documentation, and more. The entirety of Greptile's service can be self-hosted in an air-gapped environment.
+
+# Deployment
+
+- Runs in Kubernetes clusters via Helm charts
+- Compatible with major cloud providers:
+  - Amazon Web Services (AWS)
+  - Google Cloud Platform (GCP)
+  - Microsoft Azure
+  - Other major providers supported
+
+# LLM Configuration
+
+- Flexible LLM integration supporting:
+  - Any OpenAI-compatible API
+  - Custom LLM implementations
+  - Recommended: Anthropic Claude 3.5 Sonnet (as of Dec 2024)
+  - AWS Bedrock integration available
+
+# Database Requirements
+
+- PostgreSQL database required
+  - AWS RDS recommended
+  - Uses pgvector for embedding storage
+  - Customer provisions and maintains database
+
+# Version Management
+
+- Regular update notifications
+- New Docker image URLs provided
+- Maximum 30-day version delta from cloud
+- Seamless upgrade path
+
+# Code Host Support
+
+- GitHub integration
+  - GitHub Cloud (github.com)
+  - GitHub Enterprise Server (self-hosted)
+  - GitHub Enterprise Cloud
+
+- GitLab integration
+  - GitLab Cloud (gitlab.com) 
+  - GitLab Self-Managed
+  - GitLab Enterprise Edition
+
+- Support for multiple code hosts simultaneously
+- Custom code host integrations available on request
+
+
+# Pricing Structure
+
+- Annual contracts with monthly payments
+- 15% discount for upfront annual payment
+- Trial Policy:
+  - No free trials
+  - 100% refund available within first 30 days
+  - Pro-rated refunds available months 2-4 (upfront payments only)
