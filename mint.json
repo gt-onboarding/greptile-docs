@@ -23,14 +23,14 @@
   ],
   "topbarCtaButton": {
     "name": "Get API Key",
-    "url": "https://app.greptile.com"
+    "url": "https://app.greptile.com/login"
   },
   "tabs": [],
   "anchors": [
     {
       "name": "Docs Home",
       "icon": "house",
-      "url": "https://greptile.com/docs/introduction"
+      "url": "https://www.greptile.com/docs/introduction"
     },
     {
       "name": "Discord",
@@ -40,7 +40,7 @@
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://greptile.com/blog"
+      "url": "https://www.greptile.com/blog"
     }
   ],
   "navigation": [
