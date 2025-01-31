@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: Greptile API
-  version: '2.0'
+  version: "2.0"
   description: API for accessing Greptile services including chat history retrieval, repository processing, and executing queries with streaming support.
 servers:
-  - url: 'https://api.greptile.com/v2/'
+  - url: "https://api.greptile.com/v2/"
 
 components:
   securitySchemes:
@@ -36,7 +36,7 @@ components:
               role:
                 type: string
               sources:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: "#/components/schemas/SearchResponse"
 
         repos:
           type: array
@@ -84,7 +84,7 @@ components:
           description: Repository identifier in "owner/repository" format.
         branch:
           type: string
-          description: Branch name. Optional, defaults to repository's default branch.
+          description: Branch name to index.
         reload:
           type: boolean
           description: If false, won't reprocess if previously successful. Optional, default true.
@@ -126,7 +126,7 @@ components:
       type: object
       properties:
         messages:
-          description: List of chat messages until now. For a single query, include only one entry in the list with a natural language query. 
+          description: List of chat messages until now. For a single query, include only one entry in the list with a natural language query.
           type: array
           items:
             type: object
@@ -138,7 +138,7 @@ components:
               role:
                 type: string
         repositories:
-          description: List of repos that Greptile should reference while answering your question. 
+          description: List of repos that Greptile should reference while answering your question.
           type: array
           items:
             type: object
@@ -151,20 +151,20 @@ components:
                 type: string
         sessionId:
           type: string
-          description: Optional, defaults to a new session. Only use this if you intend to need to retrieve chat history later. 
+          description: Optional, defaults to a new session. Only use this if you intend to need to retrieve chat history later.
         stream:
           type: boolean
           description: Optional, default false.
         genius:
           type: boolean
-          description: Optional, default false. Genius requests are smarter but 8-10 seconds slower, great for complex usecases like reviewing PR and updating technical docs. 
+          description: Optional, default false. Genius requests are smarter but 8-10 seconds slower, great for complex usecases like reviewing PR and updating technical docs.
 
     SearchRequest:
       type: object
       properties:
         query:
           type: string
-          description: Natural language search query to find the right code in the repo. 
+          description: Natural language search query to find the right code in the repo.
         repositories:
           type: array
           description: List of repos that Greptile should reference while answering your question.
@@ -179,7 +179,7 @@ components:
                 type: string
         sessionId:
           type: string
-          description: Optional, defaults to a new session. You only need this if you want to retrieve this query/response later. 
+          description: Optional, defaults to a new session. You only need this if you want to retrieve this query/response later.
         stream:
           type: boolean
           description: Optional, default false.
@@ -190,13 +190,12 @@ components:
         message:
           type: string
         sources:
-          $ref: '#/components/schemas/SearchResponse'
-
+          $ref: "#/components/schemas/SearchResponse"
 
     SearchResponse:
       type: array
       items:
-        $ref: '#/components/schemas/Sources'
+        $ref: "#/components/schemas/Sources"
 
 paths:
   /chats/{sessionId}:
@@ -213,12 +212,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Chat history retrieved successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChatLog'
+                $ref: "#/components/schemas/ChatLog"
 
   /repositories:
     post:
@@ -231,14 +230,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RepositoryRequest'
+              $ref: "#/components/schemas/RepositoryRequest"
       responses:
-        '200':
+        "200":
           description: Repository processing started.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RepositoryResponse'
+                $ref: "#/components/schemas/RepositoryResponse"
 
   /repositories/{repositoryId}:
     get:
@@ -254,12 +253,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Repository information retrieved successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RepositoryInfo'
+                $ref: "#/components/schemas/RepositoryInfo"
 
   /query:
     post:
@@ -272,14 +271,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/QueryRequest'
+              $ref: "#/components/schemas/QueryRequest"
       responses:
-        '200':
+        "200":
           description: Query executed successfully. Response may be streamed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/QueryResponse'
+                $ref: "#/components/schemas/QueryResponse"
 
   /search:
     post:
@@ -292,11 +291,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SearchRequest'
+              $ref: "#/components/schemas/SearchRequest"
       responses:
-        '200':
+        "200":
           description: Query executed successfully. Response may be streamed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: "#/components/schemas/SearchResponse"
