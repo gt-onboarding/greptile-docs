@@ -275,10 +275,11 @@ You can use the `GET /repositories/{repositoryId}` endpoint to check the status 
 
 The JSON response has a `status` field which should be one of the following options:
 
-- `submitted`: the job is in queue.
-- `cloning`: the repository is being cloned to ephemeral storage to begin indexing.
-- `processing`: indexing is in progress. This is the longest step.
-- `completed`: the repository index is ready to be queried!
+- `SUBMITTED`: The job is in queue.
+- `CLONING`: The repository is being cloned to ephemeral storage to begin indexing.
+- `PROCESSING`: Indexing is in progress. This is the longest step.
+- `COMPLETED`: The repository index is ready to be queried!
+- `FAILED`: The repository failed to index. It may still be queryable if it has succeeded in the past.
 
 If there is a `sha` in the response, it means the repository has been indexed and is ready to be queried. We may just be processing updates from a newer commit.
 
