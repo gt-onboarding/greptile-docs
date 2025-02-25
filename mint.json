@@ -28,11 +28,6 @@
   "tabs": [],
   "anchors": [
     {
-      "name": "Docs Home",
-      "icon": "house",
-      "url": "https://www.greptile.com/docs/introduction"
-    },
-    {
       "name": "Discord",
       "icon": "discord",
       "url": "https://discord.com/invite/xZhUcFKzu7"
