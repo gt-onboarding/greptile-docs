@@ -94,5 +94,13 @@
     "koala": {
       "publicApiKey": "pk_60d31be3082b15278669ecd6230f689fd5d4"
     }
+  },
+  "metadata": {
+    "og:title": "Greptile Docs",
+    "og:image": "/images/opengraph-image.png",
+    "og:description": "Leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
+    "twitter:description": "Leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
+    "twitter:image": "/images/opengraph-image.png",
+    "twitter:site": "@greptileai"  
   }
 }
