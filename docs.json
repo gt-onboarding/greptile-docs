@@ -125,6 +125,10 @@
     {
       "source": "/apps/cr",
       "destination": "/apps/code-review"
+    },
+    {
+      "source": "https://docs.greptile.com",
+      "destination": "https://greptile.com/docs/introduction"
     }
   ]
 }
