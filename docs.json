@@ -93,10 +93,12 @@
   },
   "seo": {
     "metatags": {
-      "og:title": "Greptile Documentation",
+      "metaTitle": "Greptile Docs: AI Code Analysis and Reviews for PRs",
+      "metaDescription": "Learn how to leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
+      "og:title": "Greptile Docs: AI Code Analysis and Reviews for PRs",
       "og:description": "Learn how to leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
       "og:image": "/images/opengraph-image.png",
-      "twitter:description": "Leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
+      "twitter:description": "Learn how to leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
       "twitter:image": "/images/opengraph-image.png",
       "twitter:site": "@greptileai",
       "indexing": "all"
