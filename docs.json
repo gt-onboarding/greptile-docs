@@ -1,104 +1,121 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
   "name": "Greptile",
-  "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
-  },
-  "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
-    "dark": "#0D9373",
-    "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
-    }
+    "dark": "#0D9373"
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:support@greptile.com"
-    }
-  ],
-  "topbarCtaButton": {
-    "name": "Get API Key",
-    "url": "https://app.greptile.com/signup"
-  },
+  "favicon": "/favicon.svg",
   "navigation": {
     "anchors": [
       {
-        "name": "Docs Home",
-        "icon": "house",
-        "url": "https://www.greptile.com/docs/introduction"
-      },
-      {
-        "name": "Discord",
-        "icon": "discord",
-        "url": "https://discord.com/invite/xZhUcFKzu7"
-      },
-      {
-        "name": "Blog",
-        "icon": "newspaper",
-        "url": "https://www.greptile.com/blog"
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "prompt-guide",
+              "pricing",
+              "changelog"
+            ]
+          },
+          {
+            "group": "Apps & Integrations",
+            "pages": [
+              "apps/overview",
+              "apps/code-review",
+              "apps/github-issues",
+              "apps/linear",
+              "apps/slackbot",
+              "apps/zapier",
+              "examples"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/index",
+              "api-reference/get-repository",
+              "api-reference/query"
+            ]
+          },
+          {
+            "group": "Self-Hosting",
+            "pages": [
+              "selfhost",
+              "sso"
+            ]
+          }
+        ]
       }
     ],
-    "groups": [
-      {
-        "group": "Get Started",
-        "pages": [
-          "introduction",
-          "quickstart",
-          "prompt-guide",
-          "pricing",
-          "changelog"
-        ]
-      },
-      {
-        "group": "Apps & Integrations",
-        "pages": [
-          "apps/overview",
-          "apps/code-review",
-          "apps/github-issues",
-          "apps/linear",
-          "apps/slackbot",
-          "apps/zapier",
-          "examples"
-        ]
-      },
-      {
-        "group": "API Reference",
-        "pages": [
-          "api-reference/introduction",
-          "api-reference/index",
-          "api-reference/get-repository",
-          "api-reference/query"
-        ]
-      },
-      {
-        "group": "Self-Hosting",
-        "pages": ["selfhost", "sso"]
-      }
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Docs Home",
+          "href": "https://www.greptile.com/docs/introduction",
+          "icon": "house"
+        },
+        {
+          "anchor": "Discord",
+          "href": "https://discord.com/invite/xZhUcFKzu7",
+          "icon": "discord"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://www.greptile.com/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "api": {
+    "openapi": [
+      "openapi.yml"
     ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:support@greptile.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get API Key",
+      "href": "https://app.greptile.com/signup"
+    }
+  },
+  "footer": {
+    "socials": {
+      "twitter": "https://twitter.com/greptileai",
+      "github": "https://github.com/greptileai",
+      "linkedin": "https://www.linkedin.com/company/greptile"
+    }
+  },
+  "integrations": {
+    "koala": {
+      "publicApiKey": "pk_60d31be3082b15278669ecd6230f689fd5d4"
+    },
+    "posthog": {
+      "apiKey": "phc_qh8L3NKZ4JP6pOLRnuF3UkkUVjmktWW1mR8WfiIvWyi"
+    }
   },
   "redirects": [
     {
       "source": "/apps/cr",
       "destination": "/apps/code-review"
     }
-  ],
-  "openapi": ["openapi.yml"],
-  "footerSocials": {
-    "twitter": "https://twitter.com/greptileai",
-    "github": "https://github.com/greptileai",
-    "linkedin": "https://www.linkedin.com/company/greptile"
-  },
-  "analytics": {
-    "posthog": {
-      "apiKey": "phc_qh8L3NKZ4JP6pOLRnuF3UkkUVjmktWW1mR8WfiIvWyi"
-    },
-    "koala": {
-      "publicApiKey": "pk_60d31be3082b15278669ecd6230f689fd5d4"
-    }
-  }
+  ]
 }
