@@ -1,134 +1,104 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "$schema": "https://mintlify.com/schema.json",
   "name": "Greptile",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0D9373",
     "light": "#07C983",
-    "dark": "#0D9373"
+    "dark": "#0D9373",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
   },
-  "favicon": "/favicon.svg",
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:support@greptile.com"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get API Key",
+    "url": "https://app.greptile.com/signup"
+  },
   "navigation": {
     "anchors": [
       {
-        "anchor": "Documentation",
-        "icon": "book-open",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "introduction",
-              "quickstart",
-              "prompt-guide",
-              "pricing",
-              "changelog"
-            ]
-          },
-          {
-            "group": "Apps & Integrations",
-            "pages": [
-              "apps/overview",
-              "apps/code-review",
-              "apps/github-issues",
-              "apps/linear",
-              "apps/slackbot",
-              "apps/zapier",
-              "examples"
-            ]
-          },
-          {
-            "group": "API Reference",
-            "pages": [
-              "api-reference/introduction",
-              "api-reference/index",
-              "api-reference/get-repository",
-              "api-reference/query"
-            ]
-          },
-          {
-            "group": "Self-Hosting",
-            "pages": [
-              "selfhost"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Discord",
-          "href": "https://discord.com/invite/xZhUcFKzu7",
-          "icon": "discord"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://www.greptile.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg",
-    "href": "https://www.greptile.com"
-  },
-  "api": {
-    "openapi": [
-      "openapi.yml"
-    ]
-  },
-  "navbar": {
-    "links": [
+        "name": "Docs Home",
+        "icon": "house",
+        "url": "https://www.greptile.com/docs/introduction"
+      },
       {
-        "label": "Support",
-        "href": "mailto:support@greptile.com"
+        "name": "Discord",
+        "icon": "discord",
+        "url": "https://discord.com/invite/xZhUcFKzu7"
+      },
+      {
+        "name": "Blog",
+        "icon": "newspaper",
+        "url": "https://www.greptile.com/blog"
       }
     ],
-    "primary": {
-      "type": "button",
-      "label": "Get API Key",
-      "href": "https://app.greptile.com/login"
-    }
-  },
-  "seo": {
-    "metatags": {
-      "metaTitle": "Greptile Docs: AI Code Analysis and Reviews for PRs",
-      "metaDescription": "Learn how to leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
-      "og:title": "Greptile Docs: AI Code Analysis and Reviews for PRs",
-      "og:description": "Learn how to leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
-      "og:image": "/images/opengraph-image.png",
-      "twitter:description": "Learn how to leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.",
-      "twitter:image": "/images/opengraph-image.png",
-      "twitter:site": "@greptileai",
-      "indexing": "all"
-    },
-    "indexing": "navigable"
-  },
-  "footer": {
-    "socials": {
-      "twitter": "https://twitter.com/greptileai",
-      "github": "https://github.com/greptileai",
-      "linkedin": "https://www.linkedin.com/company/greptile"
-    }
-  },
-  "integrations": {
-    "koala": {
-      "publicApiKey": "pk_60d31be3082b15278669ecd6230f689fd5d4"
-    },
-    "posthog": {
-      "apiKey": "phc_qh8L3NKZ4JP6pOLRnuF3UkkUVjmktWW1mR8WfiIvWyi"
-    }
+    "groups": [
+      {
+        "group": "Get Started",
+        "pages": [
+          "introduction",
+          "quickstart",
+          "prompt-guide",
+          "pricing",
+          "changelog"
+        ]
+      },
+      {
+        "group": "Apps & Integrations",
+        "pages": [
+          "apps/overview",
+          "apps/code-review",
+          "apps/github-issues",
+          "apps/linear",
+          "apps/slackbot",
+          "apps/zapier",
+          "examples"
+        ]
+      },
+      {
+        "group": "API Reference",
+        "pages": [
+          "api-reference/introduction",
+          "api-reference/index",
+          "api-reference/get-repository",
+          "api-reference/query"
+        ]
+      },
+      {
+        "group": "Self-Hosting",
+        "pages": ["selfhost", "sso"]
+      }
+    ]
   },
   "redirects": [
     {
       "source": "/apps/cr",
       "destination": "/apps/code-review"
-    },
-    {
-      "source": "https://docs.greptile.com",
-      "destination": "https://greptile.com/docs/introduction"
     }
-  ]
+  ],
+  "openapi": ["openapi.yml"],
+  "footerSocials": {
+    "twitter": "https://twitter.com/greptileai",
+    "github": "https://github.com/greptileai",
+    "linkedin": "https://www.linkedin.com/company/greptile"
+  },
+  "analytics": {
+    "posthog": {
+      "apiKey": "phc_qh8L3NKZ4JP6pOLRnuF3UkkUVjmktWW1mR8WfiIvWyi"
+    },
+    "koala": {
+      "publicApiKey": "pk_60d31be3082b15278669ecd6230f689fd5d4"
+    }
+  }
 }
