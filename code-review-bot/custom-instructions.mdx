@@ -1,0 +1,54 @@
+---
+title: Custom Instructions
+description: 'Customize Greptile&apos;s behavior and enforce custom patterns'
+keywords: 'AI code reviews, codebase analysis, natural language queries, GitHub integration, Slack integration, PR review bot'
+metaTitle: 'Greptile Docs: AI Expert for Code Analysis and Reviews'
+metaDescription: 'Leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.'
+---
+
+You can customize Greptile's behavior by providing "custom instructions" for the bot to follow, for example, "Include a section on compliance implications of the changes in the PR."
+
+<Frame>
+  <img src="/images/cr-bot/sysprompt.gif" alt="Example of Greptile AI code review customization" />
+  <figcaption>Example of Greptile AI code review customization</figcaption>
+</Frame>
+
+You can edit custom instructions on the [dashboard](https://app.greptile.com/), or via [`greptile.json`](code-review-bot/greptile-json) file in your repo.
+
+---
+
+## What can you put into custom instructions?
+
+Custom instructions are a modified version of a system prompt. 
+
+### 1. Reference my style guide
+    If you have a style guide file in the repo, you can add the something like this to your custom instructions:
+    ```
+    Reference path/to/styleguide.md and enforce those rules.
+    ```
+
+### 2. Enforce my custom patterns
+    Customize Greptile's behavior by providing "custom instructions" for the bot to follow, for example:
+    ```
+    Enforce the following patterns:
+    - For GraphQL:
+      - Ensure schema is well-documented with clear descriptions
+      - Use consistent and meaningful naming conventions
+      - Keep schema organization logical and maintainable
+    - For Go:
+      - Follow idiomatic Go patterns and conventions
+      - Use clear and descriptive names that indicate purpose
+      - Keep functions focused and reasonably sized
+      - Handle errors consistently and explicitly
+    ```
+
+### 3. Helpful context on business logic
+    You can add specific business logic rules directly in the custom instructions, for example:
+    ```
+    Ensure billing logic follows these rules:
+    - User accounts should be deactivated after 90 days of inactivity
+    - Orders over $1000 require manager approval
+    - Refunds must be processed within 48 hours
+    - Premium users should have priority queue access
+    ```
+
