@@ -17,7 +17,6 @@
           {
             "group": "Code Review Bot",
             "pages": [
-              "code-review-bot/introduction",
               "code-review-bot/getting-started",
               "code-review-bot/key-features",
               "code-review-bot/trigger-code-review",
@@ -105,7 +104,7 @@
   "redirects": [
     {
       "source": "/apps/cr",
-      "destination": "/code-review-bot/introduction"
+      "destination": "/introduction"
     },
     {
       "source": "/code-review-bot",
