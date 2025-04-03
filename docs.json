@@ -20,7 +20,8 @@
               "code-review-bot/key-features",
               "code-review-bot/trigger-code-review",
               "code-review-bot/custom-instructions",
-              "code-review-bot/greptile-json"
+              "code-review-bot/greptile-json",
+              "code-review-bot/emoji-reactions"
             ]
           },
           {
