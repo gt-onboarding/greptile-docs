@@ -54,7 +54,7 @@ Note: The `ignorePatterns` field follows `.gitignore` [syntax](https://git-scm.c
 | `ignoreKeywords` | string | Newline-separated list of keywords. PRs with these keywords in their title or description will be ignored. |
 | `ignorePatterns` | string | Newline-separated list of file patterns to ignore, following .gitignore syntax. Files matching these patterns will not be reviewed. |
 | `patternRepositories` | array | List of repositories to learn patterns from. Greptile will analyze these repos to understand your codebase's patterns. |
-| `triggerOnUpdates` | boolean | If true, Greptile will review code when PR is updated. If false, only reviews on PR creation. |
+| `triggerOnUpdates` | boolean | If true, Greptile will review code every time a PR is updated with a new commit. |
 | `shouldUpdateDescription` | boolean | If true, Greptile will update the PR description with a summary of changes. If false, only comments on code. |
 | `disabledLabels` | array | PRs with these labels will not be reviewed by Greptile, even if other trigger conditions are met. |
 | `includeAuthors` | array | Only PRs from these authors will be reviewed. If empty, reviews PRs from all authors (except excluded ones). |
