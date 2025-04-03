@@ -1,13 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "linden",
   "name": "Greptile",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373"
+    "primary": "#107A4D"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/logo-cropped.png",
   "navigation": {
     "anchors": [
       {
@@ -17,6 +15,7 @@
           {
             "group": "Code Review Bot",
             "pages": [
+              "introduction",
               "code-review-bot/getting-started",
               "code-review-bot/key-features",
               "code-review-bot/trigger-code-review",
@@ -47,8 +46,8 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Docs Home",
-          "href": "https://www.greptile.com/docs/introduction",
+          "anchor": "Greptile Home",
+          "href": "https://www.greptile.com/",
           "icon": "house"
         },
         {
@@ -65,8 +64,8 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo-cropped.png",
+    "dark": "/logo-cropped.png"
   },
   "api": {
     "openapi": [
