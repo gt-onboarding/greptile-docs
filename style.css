@@ -5,3 +5,8 @@ p, li, tr, td, th {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Tasa', sans-serif;
 }
+
+.navbar {
+    background-color: #F9F7F3;
+}
+
