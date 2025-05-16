@@ -1,9 +1,67 @@
+/* Satoshi Font Family */
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/fonts/Satoshi-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* TASA Orbiter Font Family */
+@font-face {
+    font-family: 'TASA';
+    src: url('/fonts/TASAOrbiterDisplay-Regular-BF64891cba1d563.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TASA';
+    src: url('/fonts/TASAOrbiterDisplay-Medium-BF64891cba56e9b.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TASA';
+    src: url('/fonts/TASAOrbiterDisplay-Bold-BF64891cba5ae6f.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'TASA';
+    src: url('/fonts/TASAOrbiterDisplay-Black-BF64891cba23c21.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
 p, li, tr, td, th {
     font-family: 'Satoshi', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Tasa', sans-serif;
+    font-family: 'TASA', sans-serif;
 }
 
 /* TASA Display For Titles */
