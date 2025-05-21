@@ -51,7 +51,7 @@ You can grab your global settings in the correct format [here](https://app.grept
 |-----------|------|-------------|
 | `labels` | array | Labels that will trigger a Greptile review when added to a PR. In the example above, adding "feature" or "bug" label will trigger a review. |
 | `comment` | string | A disclaimer or prefix that will be added to every Greptile PR summary. Useful for compliance requirements. |
-| `commentTypes` | array | Types of comments Greptile should make. Options include: "logic", "syntax", "security", "performance", "style", "compliance". |
+| `commentTypes` | array | Types of comments Greptile should make. Options include: "logic", "syntax", "style", "info", "advice", "checks", and "notes". |
 | `instructions` | string | Natural language custom instructions for Greptile to follow when reviewing code. Can reference files in your repo or contain specific rules. |
 | `ignoreKeywords` | string | Newline-separated list of keywords. PRs with these keywords in their title or description will be ignored. |
 | `ignorePatterns` | string | Newline-separated list of file patterns to ignore, following .gitignore syntax. Files matching these patterns will not be reviewed. |
