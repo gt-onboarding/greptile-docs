@@ -5,7 +5,7 @@
   "colors": {
     "primary": "#107A4D"
   },
-  "favicon": "/logo-cropped.png",
+  "favicon": "logo.svg",
   "navigation": {
     "anchors": [
       {
@@ -109,6 +109,10 @@
     {
       "source": "/code-review-bot",
       "destination": "/code-review-bot/overview"
+    },
+    {
+      "source": "/code-review-bot/custom-instructions",
+      "destination": "/code-review-bot/custom-context"
     }
   ]
 }

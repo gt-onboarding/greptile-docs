@@ -1,0 +1,103 @@
+---
+title: Custom Context & Learning
+description: 'Personalize Greptile&apos;s behavior with custom rules, style guides, and context.'
+keywords: 'AI code reviews, codebase analysis, natural language queries, GitHub integration, Slack integration, PR review bot'
+metaTitle: 'Greptile Docs: AI Expert for Code Analysis and Reviews'
+metaDescription: 'Leverage AI for code analysis and reviews with Greptile. Get expert insights on your codebase through natural language queries and integrations.'
+---
+
+You can customize Greptile's behavior by providing "custom context" for the bot to follow. Context can include custom rules, style guides or docs, and miscellanous information that Greptile may find useful. 
+
+Each rule, guide, etc. can be scoped to only apply to certain repos and certain filepaths/patterns. 
+
+
+## Types of Custom Context
+
+There are three types of custom context:
+
+### Custom Rules
+You can define rules such as "use loops instead of list comprehension", and Greptile will enforce this rule across your PRs.
+
+Examples:
+    ```
+    Use consistent and meaningful naming conventions in GraphQL code
+    ```
+    ```
+    Follow idiomatic Go patterns and conventions
+    ```
+    ```
+    Handle errors consistently and explicitly
+    ```
+
+### Style Guides & Docs
+You can point Greptile to your existing style guides and docs, and Greptile will use those as context when reviewing your PRs.
+
+```
+src/docs/styleguide.md
+```
+
+### Other Context
+There is also free-form space for you to explain any idiosyncracies with your team or codebase to personalize Greptile.
+
+Here is an example:
+    ```
+    Ensure billing logic follows these rules:
+    - User accounts should be deactivated after 90 days of inactivity
+    - Orders over $1000 require manager approval
+    - Refunds must be processed within 48 hours
+    - Premium users should have priority queue access
+    ```
+
+
+---
+
+## What can you put into custom instructions?
+
+Custom instructions are a modified version of a system prompt. 
+
+### 1. Reference my style guide
+    If you have a style guide file in the repo, you can add the something like this to your custom instructions:
+    ```
+    Reference path/to/styleguide.md and enforce those rules.
+    ```
+
+### 2. Enforce my custom patterns
+    Customize Greptile's behavior by providing "custom instructions" for the bot to follow, for example:
+    ```
+    Enforce the following patterns:
+    - For GraphQL:
+      - Ensure schema is well-documented with clear descriptions
+      - Use consistent and meaningful naming conventions
+      - Keep schema organization logical and maintainable
+    - For Go:
+      - Follow idiomatic Go patterns and conventions
+      - Use clear and descriptive names that indicate purpose
+      - Keep functions focused and reasonably sized
+      - Handle errors consistently and explicitly
+    ```
+
+### 3. Helpful context on business logic
+    You can add specific business logic rules directly in the custom instructions, for example:
+    ```
+    Ensure billing logic follows these rules:
+    - User accounts should be deactivated after 90 days of inactivity
+    - Orders over $1000 require manager approval
+    - Refunds must be processed within 48 hours
+    - Premium users should have priority queue access
+    ```
+
+## Scopes
+
+Each type of context, rules, guides, and "other", can be scoped to apply to specific repos and specific file patterns. 
+
+For example, I might want to enforce use of `prop types` but only in `acme/web_app` and only in files matching the pattern `src/frontend/*.tsx`.
+
+<Note>
+If you don't explicitly define a scope, Greptile will intelligently determine when the rule/stylegude etc. should be applied.
+</Note>
+
+## Learning
+
+Greptile can infer rules by observing other developers in your team commenting on PRs, as well as from interaction data such as replies to Greptile comments and 👍/👎 reactions to Greptile comments. 
+
+Greptile's latest learnings can be found on the custom context page on the Greptile dashboard.
