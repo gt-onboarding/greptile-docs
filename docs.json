@@ -5,7 +5,7 @@
   "colors": {
     "primary": "#107A4D"
   },
-  "favicon": "logo.svg",
+  "favicon": "favicon.ico",
   "navigation": {
     "anchors": [
       {
@@ -65,8 +65,8 @@
     }
   },
   "logo": {
-    "light": "/logo-cropped.png",
-    "dark": "/logo-cropped.png"
+    "light": "/logo.svg",
+    "dark": "/logo.svg"
   },
   "api": {
     "openapi": [
