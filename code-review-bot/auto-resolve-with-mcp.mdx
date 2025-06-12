@@ -1,0 +1,196 @@
+---
+title: Auto-Resolve Comments with GitHub MCP
+description: 'Use GitHub MCP Server to automatically resolve Greptile code review comments in AI editors'
+keywords: 'GitHub MCP, Cursor, Windsurf, auto-resolve, AI code editor, pull request comments'
+metaTitle: 'Auto-Resolve Greptile Comments with GitHub MCP Server'
+metaDescription: 'Learn how to use GitHub MCP Server in Cursor or Windsurf to automatically resolve Greptile code review comments'
+---
+
+<Note>Works with any MCP-compatible AI editor like Cursor, Windsurf, or Claude Desktop</Note>
+
+GitHub's MCP Server enables AI editors to directly interact with GitHub APIs, allowing you to automatically resolve Greptile code review comments without leaving your development environment.
+
+## Prerequisites
+
+- AI editor with MCP support ([Cursor](https://cursor.sh/), [Windsurf](https://codeium.com/windsurf), or [Claude Desktop](https://claude.ai/desktop))
+- GitHub personal access token with repository permissions
+- [GitHub MCP Server](https://github.com/github/github-mcp-server) installed
+
+## Setup GitHub MCP Server
+
+### 1. Install the MCP Server
+
+```bash
+# Download the latest release
+curl -L https://github.com/github/github-mcp-server/releases/latest/download/github-mcp-server-$(uname -s)-$(uname -m) -o github-mcp-server
+chmod +x github-mcp-server
+```
+
+### 2. Configure Your Editor
+
+<Tabs>
+<Tab title="Cursor">
+Add to your Cursor settings (`~/.cursor/mcp_servers.json`):
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "./github-mcp-server",
+      "env": {
+        "GITHUB_TOKEN": "your_github_token_here"
+      }
+    }
+  }
+}
+```
+</Tab>
+
+<Tab title="Windsurf">
+Add to your Windsurf MCP configuration:
+
+```json
+{
+  "github": {
+    "command": "./github-mcp-server",
+    "env": {
+      "GITHUB_TOKEN": "your_github_token_here"
+    }
+  }
+}
+```
+</Tab>
+
+<Tab title="Claude Desktop">
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "./github-mcp-server",
+      "env": {
+        "GITHUB_TOKEN": "your_github_token_here"
+      }
+    }
+  }
+}
+```
+</Tab>
+</Tabs>
+
+## Auto-Resolving Greptile Comments
+
+### 1. Fetch PR Comments
+
+Use your AI editor to fetch all comments from a pull request:
+
+```
+@github Can you get all the comments from PR #123 in owner/repo-name? Focus on the ones from the Greptile bot.
+```
+
+The MCP server will retrieve all PR comments, including those from Greptile's code review bot.
+
+### 2. Analyze and Resolve
+
+Ask your AI editor to resolve the comments:
+
+```
+Please analyze these Greptile comments and automatically resolve them by:
+1. Opening the relevant files
+2. Understanding the context of each comment
+3. Implementing the suggested fixes
+4. Ensuring the changes don't break existing functionality
+```
+
+### 3. Bulk Resolution Workflow
+
+For efficiency, you can process multiple comments at once:
+
+```
+Please process all Greptile comments in this PR:
+1. Group related comments by file
+2. Prioritize critical issues (security, bugs) over style issues
+3. Implement fixes in logical order
+4. Create a summary of all changes made
+```
+
+## Advanced Usage
+
+### Selective Resolution
+
+Target specific types of comments:
+
+```
+@github Get comments from PR #123, then resolve only the security and performance related Greptile comments, ignoring style suggestions.
+```
+
+### Validation Workflow
+
+Implement a validation step:
+
+```
+After resolving each Greptile comment:
+1. Run relevant tests to ensure no regressions
+2. Check if the fix addresses the root cause
+3. Verify the change follows project conventions
+4. Create a commit message explaining the fix
+```
+
+### Custom Patterns
+
+Train your editor on your codebase patterns:
+
+```
+Before resolving Greptile comments, analyze the existing codebase to understand:
+- Naming conventions
+- Code organization patterns  
+- Testing practices
+- Documentation standards
+
+Then ensure all fixes align with these patterns.
+```
+
+## Best Practices
+
+<Card title="Review Before Committing" icon="eye" horizontal>
+Always review AI-generated fixes before committing, especially for complex logic changes.
+</Card>
+
+<Card title="Test Thoroughly" icon="flask" horizontal>
+Run your test suite after resolving comments to catch any regressions.
+</Card>
+
+<Card title="Incremental Approach" icon="stairs" horizontal>
+Start with style and simple fixes before tackling complex logic issues.
+</Card>
+
+<Card title="Context Awareness" icon="brain" horizontal>
+Ensure your AI editor understands the full context of changes, not just individual files.
+</Card>
+
+## Troubleshooting
+
+**MCP Server not responding**: Verify your GitHub token has sufficient permissions and the server binary is executable.
+
+**Comments not fetching**: Ensure the repository name and PR number are correct, and you have read access to the repository.
+
+**Fixes breaking tests**: The AI may need more context about your testing patterns and validation requirements.
+
+## Example Workflow
+
+```bash
+# 1. Fetch PR comments
+"@github List all comments from PR #456 in myorg/myrepo"
+
+# 2. Filter for Greptile comments  
+"Show me only the comments from the Greptile bot"
+
+# 3. Resolve systematically
+"Starting with the most critical issues, please resolve each Greptile comment by implementing the suggested fixes"
+
+# 4. Validate changes
+"Run the test suite and verify all fixes are working correctly"
+```
+
+This workflow transforms Greptile's code review insights into actionable fixes, significantly accelerating your development cycle while maintaining code quality. 

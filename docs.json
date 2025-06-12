@@ -21,7 +21,8 @@
               "code-review-bot/trigger-code-review",
               "code-review-bot/custom-context",
               "code-review-bot/greptile-json",
-              "code-review-bot/emoji-reactions"
+              "code-review-bot/emoji-reactions",
+              "code-review-bot/auto-resolve-with-mcp"
             ]
           },
           {
