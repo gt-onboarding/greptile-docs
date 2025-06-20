@@ -1,0 +1,181 @@
+---
+title: Reducing Nitpicks
+description: 'How Greptile learns to reduce distracting minor comments and focus on issues that matter'
+keywords: 'nitpicks, code review noise, learning system, comment filtering, team preferences'
+metaTitle: 'Nitpicks - How Greptile Works'
+metaDescription: 'How Greptile automatically learns to suppress minor comments that distract from critical issues'
+---
+
+Greptile learns to eliminate nitpicky comments that distract developers from critical issues by analyzing which suggestions your team actually acts on.
+
+## The Nitpick Problem
+
+Nitpicks are minor suggestions that distract from critical issues:
+
+```mermaid
+graph LR
+    A[Security Bug] --> B[Developer Attention]
+    C[Missing Semicolon] --> B
+    D[Performance Issue] --> B
+    E[Spacing Issue] --> B
+    F[Logic Error] --> B
+    
+    style A stroke:#ff6b6b,stroke-width:3px
+    style D stroke:#ff6b6b,stroke-width:3px
+    style F stroke:#ff6b6b,stroke-width:3px
+    style C stroke:#4ade80,stroke-width:3px
+    style E stroke:#4ade80,stroke-width:3px
+```
+
+**Problem**: Developers focus on easy-to-fix style issues while missing critical bugs.
+
+## How Greptile Learns to Filter Noise
+
+### 1. Commit Analysis
+
+Greptile reads the **first** and **last** commit of every PR to see which comments were addressed:
+
+```mermaid
+graph TD
+    A[Greptile Comments] --> B[First & Last Commit Analysis]
+    B --> C{Comment Addressed?}
+    C -->|Yes| D[Keep Suggesting]
+    C -->|No| E[Reduce Priority]
+```
+
+### 2. Learning from Reactions
+
+Thumbs up/down reactions provide immediate feedback:
+
+<Tabs>
+<Tab title="👍 Thumbs Up">
+```
+Greptile: "Consider adding error handling here"
+Developer: 👍 (implements the suggestion)
+→ Greptile learns: "Error handling suggestions are valuable"
+```
+</Tab>
+
+<Tab title="👎 Thumbs Down">
+```
+Greptile: "Add semicolon at end of line"
+Developer: 👎 (ignores consistently)
+→ Greptile learns: "This team doesn't care about semicolons"
+```
+</Tab>
+</Tabs>
+
+### 3. Learning Examples
+
+**Example 1: Style Comments Get Filtered**
+
+```mermaid
+sequenceDiagram
+    participant G as Greptile
+    participant D as Developer
+    participant L as Learning System
+    
+    G->>D: "Missing semicolon on line 23"
+    D->>D: Ignores comment
+    G->>L: Log: Style comment ignored
+    
+    G->>D: "Missing semicolon on line 45" 
+    D->>D: Ignores comment
+    G->>L: Log: Style comment ignored again
+    
+    G->>D: "Missing semicolon on line 67"
+    D->>G: 👎
+    G->>L: Log: Explicit negative feedback
+    
+    L->>G: Suppress semicolon suggestions
+    Note over G: Stops making semicolon comments
+```
+
+**Example 2: Critical Issues Always Surface**
+
+```typescript
+// Greptile will ALWAYS comment on this (even if team ignores style):
+function transferMoney(amount, account) {
+  // No input validation - SECURITY RISK
+  database.transfer(amount, account);
+}
+
+// But stops commenting on this after learning:
+const user = getUser()  // Missing semicolon - but team doesn't care
+```
+
+## Learning Thresholds
+
+Greptile stops making certain types of comments based on team behavior:
+
+```mermaid
+graph TD
+    A[Comment Made] --> B{Addressed?}
+    B -->|Yes| C[Continue Suggesting]
+    B -->|No| D[Track Ignore Count]
+    D --> E{Ignored 3+ Times?}
+    E -->|No| F[Keep Suggesting]
+    E -->|Yes| G{Critical Bug?}
+    G -->|Yes| H[Always Suggest]
+    G -->|No| I[Suppress Comment Type]
+```
+
+### What Gets Suppressed vs. What Doesn't
+
+<Accordion>
+<AccordionItem title="✅ Gets Suppressed (if consistently ignored)">
+- Style/formatting issues
+- Import organization
+- Missing documentation (non-critical)
+- Naming convention deviations
+- Code organization preferences
+</AccordionItem>
+
+<AccordionItem title="🚫 Never Gets Suppressed">
+- Security vulnerabilities
+- Memory leaks
+- Infinite loops
+- Null pointer exceptions
+- Data validation missing from user inputs
+</AccordionItem>
+</Accordion>
+
+## The Result: Focused Reviews
+
+**Before Learning:**
+```
+PR #123 - Add user authentication
+├── 🔴 Missing input validation (CRITICAL)
+├── 🟡 Consider adding error handling
+├── 🟢 Missing semicolon on line 45
+├── 🟢 Inconsistent indentation
+├── 🟢 Import order could be improved  
+├── 🟢 Function could use better name
+└── 🟢 Missing JSDoc comment
+```
+
+**After Learning (Team ignores style issues):**
+```
+PR #123 - Add user authentication  
+├── 🔴 Missing input validation (CRITICAL)
+└── 🟡 Consider adding error handling
+```
+
+## Why This Matters
+
+<Card title="Reduced Noise" icon="volume" horizontal>
+Fewer distracting comments mean developers focus on what matters
+</Card>
+
+<Card title="Faster Reviews" icon="clock" horizontal>
+Less time spent on trivial issues, more on logic and architecture
+</Card>
+
+<Card title="Better Adoption" icon="thumbs-up" horizontal>
+Teams are more likely to act on focused, relevant suggestions
+</Card>
+
+<Card title="Adaptive AI" icon="brain" horizontal>
+The system becomes more valuable over time as it learns your preferences
+</Card>
+

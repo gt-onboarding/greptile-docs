@@ -13,7 +13,7 @@
         "icon": "book-open",
         "groups": [
           {
-            "group": "Code Review Bot",
+            "group": "User Manual",
             "pages": [
               "introduction",
               "code-review-bot/getting-started",
@@ -23,6 +23,15 @@
               "code-review-bot/greptile-json",
               "code-review-bot/emoji-reactions",
               "code-review-bot/auto-resolve-with-mcp"
+            ]
+          },
+          {
+            "group": "How Greptile Works",
+            "pages": [
+              "how-greptile-works/graph-based-codebase-context",
+              "how-greptile-works/nitpicks",
+              "how-greptile-works/custom-rules",
+              "how-greptile-works/memory-and-learning"
             ]
           },
           {
