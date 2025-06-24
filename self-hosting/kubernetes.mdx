@@ -1,0 +1,574 @@
+---
+title: Kubernetes Deployment
+description: 'Deploy Greptile on Kubernetes using Helm charts for enterprise environments'
+---
+
+
+Deploy Greptile on Kubernetes for enterprise environments requiring high availability, scalability, and advanced orchestration capabilities.
+
+## Architecture
+
+<Frame>
+  <img src="https://github.com/greptileai/akupara/raw/main/OnPremEKS.jpg" alt="Kubernetes Architecture Diagram" />
+</Frame>
+
+The Kubernetes deployment includes:
+- **Greptile Application Pods**: Horizontally scalable API and web services
+- **Ingress Controller**: Traffic routing and SSL termination
+- **External Dependencies**: Managed PostgreSQL and Redis services
+- **ConfigMaps and Secrets**: Configuration and credential management
+- **Persistent Volumes**: File storage and caching
+- **Service Mesh**: Advanced networking and security (optional)
+
+## Prerequisites
+
+### System Requirements
+- **Kubernetes Cluster**: Version 1.21 or later
+- **Cluster Resources**: 
+  - Minimum: 8 CPU cores, 16GB RAM across nodes
+  - Recommended: 16+ CPU cores, 32GB+ RAM
+  - Storage: 500GB+ persistent storage available
+
+### Required Tools
+- `kubectl`: Kubernetes command-line tool
+- `helm`: Helm package manager (version 3.0+)
+- `terraform`: Infrastructure as Code (for AWS deployment)
+- `awscli`: AWS CLI (for AWS deployments)
+
+### Infrastructure Dependencies
+- **PostgreSQL Database**: RDS, Cloud SQL, or equivalent managed service
+- **Redis Cache**: ElastiCache, Memorystore, or equivalent
+- **Load Balancer**: ALB, GLB, or cluster ingress controller
+- **DNS**: Managed DNS service for domain routing
+
+## Installation Steps
+
+### 1. Download Repository
+
+```bash
+# Clone the akupara repository
+git clone https://github.com/greptileai/akupara.git
+cd akupara/kubernetes
+
+# Or download latest release
+wget https://github.com/greptileai/akupara/archive/refs/tags/v0.1.3.tar.gz
+tar -xzf v0.1.3.tar.gz
+cd akupara-0.1.3/kubernetes
+```
+
+### 2. Infrastructure Setup (AWS Example)
+
+If deploying on AWS, first set up the infrastructure:
+
+```bash
+cd terraform
+
+# Configure AWS credentials
+aws configure
+
+# Initialize Terraform
+terraform init
+
+# Review and customize terraform.tfvars
+cp terraform.tfvars.example terraform.tfvars
+```
+
+Edit `terraform.tfvars`:
+
+```hcl
+# AWS Configuration
+aws_region = "us-east-1"
+availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+
+# EKS Configuration
+cluster_name = "greptile-prod"
+cluster_version = "1.27"
+
+# Node Groups
+node_groups = {
+  general = {
+    desired_capacity = 3
+    max_capacity     = 10
+    min_capacity     = 3
+    instance_types   = ["m5.large"]
+  }
+  compute = {
+    desired_capacity = 2
+    max_capacity     = 5
+    min_capacity     = 1
+    instance_types   = ["c5.xlarge"]
+  }
+}
+
+# Database Configuration
+db_instance_class = "db.r5.large"
+db_allocated_storage = 100
+db_max_allocated_storage = 1000
+
+# Redis Configuration
+redis_node_type = "cache.r5.large"
+redis_num_cache_nodes = 2
+
+# Networking
+vpc_cidr = "10.0.0.0/16"
+```
+
+Deploy the infrastructure:
+
+```bash
+# Plan deployment
+terraform plan
+
+# Apply infrastructure
+terraform apply
+
+# Get cluster credentials
+aws eks update-kubeconfig --region us-east-1 --name greptile-prod
+```
+
+### 3. Helm Chart Configuration
+
+Navigate to the Helm chart directory:
+
+```bash
+cd ../helm
+```
+
+Create and customize your values file:
+
+```bash
+cp values.yaml values-prod.yaml
+```
+
+Edit `values-prod.yaml`:
+
+```yaml
+# Application Configuration
+image:
+  repository: greptile/api
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+replicaCount: 3
+
+# Service Configuration
+service:
+  type: ClusterIP
+  port: 8080
+
+# Ingress Configuration
+ingress:
+  enabled: true
+  className: "alb"
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:us-east-1:123456789:certificate/your-cert-arn"
+  hosts:
+    - host: api.greptile.yourdomain.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: greptile-tls
+      hosts:
+        - api.greptile.yourdomain.com
+
+# Database Configuration
+database:
+  host: "greptile-db.cluster-xyz.us-east-1.rds.amazonaws.com"
+  port: 5432
+  name: "greptile"
+  user: "greptile_user"
+  # Password should be stored in a Kubernetes secret
+
+# Redis Configuration
+redis:
+  host: "greptile-cache.abc123.cache.amazonaws.com"
+  port: 6379
+
+# LLM Configuration
+llm:
+  provider: "anthropic"  # or "openai", "bedrock"
+  # API keys should be stored in Kubernetes secrets
+
+# Resource Configuration
+resources:
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+  requests:
+    cpu: 1000m
+    memory: 2Gi
+
+# Autoscaling
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# Security
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 2000
+
+# Monitoring
+serviceMonitor:
+  enabled: true
+  interval: 30s
+```
+
+### 4. Create Kubernetes Secrets
+
+Create secrets for sensitive configuration:
+
+```bash
+# Database credentials
+kubectl create secret generic greptile-db \
+  --from-literal=password='your-db-password'
+
+# LLM API keys
+kubectl create secret generic greptile-llm \
+  --from-literal=openai-api-key='your-openai-key' \
+  --from-literal=anthropic-api-key='your-anthropic-key'
+
+# GitHub App credentials
+kubectl create secret generic greptile-github \
+  --from-literal=app-id='123456' \
+  --from-literal=webhook-secret='your-webhook-secret' \
+  --from-file=private-key=github-private-key.pem
+
+# SSL certificates (if not using cert-manager)
+kubectl create secret tls greptile-tls \
+  --cert=certificate.pem \
+  --key=private-key.pem
+```
+
+### 5. Deploy with Helm
+
+```bash
+# Add Helm repository (if using remote chart)
+helm repo add greptile https://charts.greptile.com
+helm repo update
+
+# Or install from local chart
+helm install greptile ./greptile-chart \
+  --values values-prod.yaml \
+  --namespace greptile \
+  --create-namespace
+
+# Check deployment status
+kubectl get pods -n greptile
+kubectl get services -n greptile
+kubectl get ingress -n greptile
+```
+
+### 6. Verify Deployment
+
+```bash
+# Check pod status
+kubectl get pods -n greptile
+
+# Check service endpoints
+kubectl get svc -n greptile
+
+# View application logs
+kubectl logs -n greptile deployment/greptile-api
+
+# Test API endpoint
+curl https://api.greptile.yourdomain.com/health
+
+# Check ingress
+kubectl describe ingress -n greptile
+```
+
+## Advanced Configuration
+
+### High Availability Setup
+
+Configure for multi-zone deployment:
+
+```yaml
+# values-ha.yaml
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app.kubernetes.io/name
+          operator: In
+          values:
+          - greptile
+      topologyKey: kubernetes.io/hostname
+
+tolerations:
+  - key: "spot"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
+
+nodeSelector:
+  kubernetes.io/arch: amd64
+```
+
+### Monitoring and Observability
+
+Set up comprehensive monitoring:
+
+```yaml
+# Prometheus monitoring
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+    path: /metrics
+
+# Grafana dashboards
+grafana:
+  enabled: true
+  dashboards:
+    greptile:
+      file: dashboards/greptile-dashboard.json
+
+# Logging
+fluentd:
+  enabled: true
+  elasticsearch:
+    host: "elasticsearch.logging.svc.cluster.local"
+```
+
+### Security Hardening
+
+Implement security best practices:
+
+```yaml
+# Pod Security Standards
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  fsGroup: 2000
+  seccompProfile:  
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  capabilities:
+    drop:
+    - ALL
+
+# Network Policies
+networkPolicy:
+  enabled: true
+  ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: ingress-nginx
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            name: monitoring
+```
+
+## Operations
+
+### Scaling
+
+Scale the deployment based on load:
+
+```bash
+# Manual scaling
+kubectl scale deployment greptile-api --replicas=5 -n greptile
+
+# Configure HPA
+kubectl apply -f - <<EOF
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: greptile-hpa
+  namespace: greptile
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: greptile-api
+  minReplicas: 3
+  maxReplicas: 20
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+EOF
+```
+
+### Updates and Rollbacks
+
+Manage application updates:
+
+```bash
+# Update to new version
+helm upgrade greptile ./greptile-chart \
+  --values values-prod.yaml \
+  --set image.tag=v1.2.3
+
+# Monitor rollout
+kubectl rollout status deployment/greptile-api -n greptile
+
+# Rollback if needed
+helm rollback greptile 1
+
+# Check rollout history
+kubectl rollout history deployment/greptile-api -n greptile
+```
+
+### Backup and Recovery
+
+Implement backup strategies:
+
+```bash
+# Database backup using CronJob
+kubectl apply -f - <<EOF
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  namespace: greptile
+spec:
+  schedule: "0 2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: postgres-backup
+            image: postgres:13
+            command:
+            - /bin/bash
+            - -c
+            - pg_dump -h $DB_HOST -U $DB_USER $DB_NAME | gzip > /backup/backup-$(date +%Y%m%d).sql.gz
+            env:
+            - name: DB_HOST
+              value: "greptile-db.cluster-xyz.us-east-1.rds.amazonaws.com"
+            - name: DB_USER
+              value: "greptile_user"
+            - name: DB_NAME
+              value: "greptile"
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: greptile-db
+                  key: password
+            volumeMounts:
+            - name: backup-storage
+              mountPath: /backup
+          volumes:
+          - name: backup-storage
+            persistentVolumeClaim:
+              claimName: backup-pvc
+          restartPolicy: OnFailure
+EOF
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Pods not starting**
+```bash
+# Check pod events
+kubectl describe pod <pod-name> -n greptile
+
+# Check resource constraints
+kubectl top nodes
+kubectl top pods -n greptile
+
+# Check node conditions
+kubectl get nodes -o wide
+```
+
+**Database connectivity issues**
+```bash
+# Test database connection
+kubectl run -it --rm debug --image=postgres:13 --restart=Never -- psql -h db-host -U username -d database
+
+# Check network policies
+kubectl get networkpolicy -n greptile
+```
+
+**Ingress not working**
+```bash
+# Check ingress controller logs
+kubectl logs -n ingress-nginx deployment/ingress-nginx-controller
+
+# Verify ingress configuration
+kubectl describe ingress greptile-ingress -n greptile
+
+# Check DNS resolution
+nslookup api.greptile.yourdomain.com
+```
+
+### Performance Optimization
+
+Optimize resource usage:
+
+```yaml
+# Resource tuning
+resources:
+  requests:
+    cpu: 500m
+    memory: 1Gi
+  limits:
+    cpu: 2000m
+    memory: 4Gi
+
+# JVM tuning for API pods
+env:
+  - name: JAVA_OPTS
+    value: "-Xms1g -Xmx3g -XX:+UseG1GC"
+
+# Database connection pooling
+database:
+  maxConnections: 100
+  connectionTimeout: 30000
+```
+
+## Migration from Docker Compose
+
+To migrate from Docker Compose to Kubernetes:
+
+1. **Export data** from existing deployment
+2. **Deploy Kubernetes** infrastructure
+3. **Import data** to new database
+4. **Update DNS** to point to new ingress
+5. **Verify functionality** and performance
+6. **Decommission** old deployment
+
+## Support
+
+For Kubernetes deployment issues:
+1. Check pod logs: `kubectl logs -n greptile deployment/greptile-api`
+2. Review cluster events: `kubectl get events -n greptile --sort-by='.lastTimestamp'`
+3. Monitor resource usage: `kubectl top pods -n greptile`
+4. Contact support with cluster information and deployment configuration
+
+<Warning>
+Kubernetes deployments require expertise in container orchestration, networking, and cloud infrastructure. Consider professional services for production deployments.
+</Warning> 

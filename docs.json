@@ -35,6 +35,14 @@
             ]
           },
           {
+            "group": "Guide to Self-Hosting Greptile",
+            "pages": [
+              "self-hosting/overview",
+              "self-hosting/docker-compose",
+              "self-hosting/kubernetes"
+            ]
+          },
+          {
             "group": "Security",
             "pages": [
               "security/sso",

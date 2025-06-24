@@ -1,0 +1,73 @@
+---
+title: Self-Hosting Overview
+description: 'Complete guide to deploying Greptile infrastructure on-premises'
+---
+
+This section provides comprehensive guides for self-hosting Greptile using the [akupara repository](https://github.com/greptileai/akupara). We offer two primary methods of deployment: `docker-compose` and `kubernetes`. We strongly recommend using the `docker-compose` method as it is simpler and more flexible.
+
+<Info>
+The akupara repository contains all the infrastructure code and deployment guides for running Greptile on-premises. Make sure to download the latest release from [GitHub](https://github.com/greptileai/akupara/releases).
+</Info>
+
+## Deployment Options
+
+<CardGroup cols={2}>
+  <Card title="Docker Compose" icon="docker" href="/self-hosting/docker-compose">
+    **Recommended approach** - Simple and flexible deployment using Docker Compose
+  </Card>
+  <Card title="Kubernetes" icon="dharmachakra" href="/self-hosting/kubernetes">
+    Enterprise-grade deployment using Kubernetes with Helm charts
+  </Card>
+</CardGroup>
+
+## Architecture Overview
+
+### Docker Compose Architecture
+The docker-compose deployment provides a streamlined architecture suitable for most on-premises deployments:
+
+<Frame>
+  <img src="https://github.com/greptileai/akupara/raw/main/OnPremEC2.jpg" alt="Docker Compose Architecture Diagram" />
+</Frame>
+
+### Kubernetes Architecture  
+The Kubernetes deployment offers a more complex but scalable architecture:
+
+<Frame>
+  <img src="https://github.com/greptileai/akupara/raw/main/OnPremEKS.jpg" alt="Kubernetes Architecture Diagram" />
+</Frame>
+
+## Getting Started
+
+Choose your deployment method:
+
+1. **For most users**: Start with [Docker Compose Deployment](/self-hosting/docker-compose)
+2. **For enterprise environments**: Consider [Kubernetes Deployment](/self-hosting/kubernetes)
+
+## Prerequisites
+
+### General Requirements
+- Access to the [akupara repository](https://github.com/greptileai/akupara)
+- Linux-based deployment environment
+- Network access for pulling Docker images
+- SSL certificates for HTTPS endpoints
+
+### Docker Compose Requirements
+- Docker and Docker Compose installed
+- Minimum 8GB RAM, 4 CPU cores
+- 100GB+ available disk space
+
+### Kubernetes Requirements
+- `terraform`, `helm`, and `kubectl` installed
+- For AWS deployments: `awscli` with appropriate credentials
+- Access to a Kubernetes cluster (EKS, GKE, AKS, or self-managed)
+
+## Support
+
+For additional support with self-hosting:
+- Review the detailed deployment guides in this section
+- Check the [akupara repository](https://github.com/greptileai/akupara) for the latest updates
+- Contact our engineering team for enterprise support
+
+<Note>
+Self-hosting requires an enterprise license. Contact [sales@greptile.com](mailto:sales@greptile.com) for licensing information.
+</Note> 

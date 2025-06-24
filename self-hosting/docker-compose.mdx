@@ -1,0 +1,336 @@
+---
+title: Docker Compose Deployment
+description: 'Deploy Greptile using Docker Compose - the recommended approach'
+---
+
+This is the **recommended deployment method** for most Greptile self-hosting scenarios. Docker Compose provides a simple, flexible, and reliable way to deploy all Greptile services.
+
+## Architecture
+
+<Frame>
+  <img src="https://github.com/greptileai/akupara/raw/main/OnPremEC2.jpg" alt="Docker Compose Architecture Diagram" />
+</Frame>
+
+The Docker Compose deployment includes:
+- **Greptile API Server**: Core application service
+- **PostgreSQL Database**: Primary data storage with pgvector for embeddings
+- **Redis Cache**: Session and temporary data storage
+- **Nginx Proxy**: Reverse proxy and SSL termination
+- **Supporting Services**: Health checks, monitoring, and utilities
+
+## Prerequisites
+
+### System Requirements
+- **Operating System**: Linux (Ubuntu 20.04+ or CentOS 8+ recommended)
+- **CPU**: Minimum 4 cores, 8+ cores recommended
+- **Memory**: Minimum 8GB RAM, 16GB+ recommended
+- **Storage**: 100GB+ available disk space
+- **Network**: Open ports 80, 443, and any custom ports needed
+
+### Software Requirements
+- **Docker**: Version 20.10 or later
+- **Docker Compose**: Version 2.0 or later
+- **Git**: For cloning the repository
+- **SSL Certificates**: Valid certificates for HTTPS
+
+### Dependencies
+- **PostgreSQL Database**: AWS RDS or self-hosted
+- **Redis Cache**: AWS ElastiCache or self-hosted
+- **LLM Provider**: OpenAI API, Anthropic, AWS Bedrock, or compatible API
+
+## Installation Steps
+
+### 1. Download the Repository
+
+```bash
+# Clone the akupara repository
+git clone https://github.com/greptileai/akupara.git
+cd akupara
+
+# Or download the latest release
+wget https://github.com/greptileai/akupara/archive/refs/tags/v0.1.3.tar.gz
+tar -xzf v0.1.3.tar.gz
+cd akupara-0.1.3
+```
+
+### 2. Navigate to Docker Directory
+
+```bash
+cd docker
+```
+
+### 3. Configure Environment Variables
+
+Copy the example environment file and configure it:
+
+```bash
+cp .env.example .env
+```
+
+Edit the `.env` file with your configuration:
+
+```bash
+# Database Configuration
+POSTGRES_HOST=your-postgres-host
+POSTGRES_PORT=5432
+POSTGRES_DB=greptile
+POSTGRES_USER=greptile_user
+POSTGRES_PASSWORD=your-secure-password
+
+# Redis Configuration
+REDIS_HOST=your-redis-host
+REDIS_PORT=6379
+REDIS_PASSWORD=your-redis-password
+
+# LLM Configuration
+OPENAI_API_KEY=your-openai-key
+ANTHROPIC_API_KEY=your-anthropic-key
+
+# Application Configuration
+GREPTILE_API_HOST=api.yourdomain.com
+GREPTILE_WEB_HOST=app.yourdomain.com
+SSL_CERT_PATH=/path/to/your/cert.pem
+SSL_KEY_PATH=/path/to/your/key.pem
+
+# GitHub Integration
+GITHUB_APP_ID=your-github-app-id
+GITHUB_APP_PRIVATE_KEY_PATH=/path/to/github-private-key.pem
+```
+
+### 4. Set Up SSL Certificates
+
+Place your SSL certificates in the appropriate directory:
+
+```bash
+mkdir -p ssl
+cp /path/to/your/certificate.pem ssl/
+cp /path/to/your/private-key.pem ssl/
+```
+
+### 5. Deploy with Docker Compose
+
+```bash
+# Start all services
+docker-compose up -d
+
+# Check service status
+docker-compose ps
+
+# View logs
+docker-compose logs -f
+```
+
+### 6. Verify Deployment
+
+Check that all services are running:
+
+```bash
+# Check application health
+curl https://api.yourdomain.com/health
+
+# Check database connectivity
+docker-compose exec greptile-api greptile-cli db:status
+
+# View service logs
+docker-compose logs greptile-api
+docker-compose logs greptile-web
+```
+
+## Configuration
+
+### Database Setup
+
+Ensure your PostgreSQL database has the pgvector extension:
+
+```sql
+-- Connect to your PostgreSQL database
+CREATE EXTENSION IF NOT EXISTS vector;
+```
+
+### LLM Provider Configuration
+
+Configure your preferred LLM provider in the `.env` file:
+
+#### OpenAI Configuration
+```bash
+LLM_PROVIDER=openai
+OPENAI_API_KEY=your-api-key
+OPENAI_MODEL=gpt-4
+EMBEDDING_PROVIDER=openai
+OPENAI_EMBEDDING_MODEL=text-embedding-ada-002
+```
+
+#### Anthropic Configuration
+```bash
+LLM_PROVIDER=anthropic
+ANTHROPIC_API_KEY=your-api-key
+ANTHROPIC_MODEL=claude-3-sonnet-20240229
+```
+
+#### AWS Bedrock Configuration
+```bash
+LLM_PROVIDER=bedrock
+AWS_REGION=us-east-1
+AWS_ACCESS_KEY_ID=your-access-key
+AWS_SECRET_ACCESS_KEY=your-secret-key
+BEDROCK_MODEL_ID=anthropic.claude-3-sonnet-20240229-v1:0
+```
+
+### GitHub Integration
+
+Set up GitHub App integration:
+
+1. Create a GitHub App in your organization
+2. Generate a private key
+3. Configure the app settings in your `.env` file
+
+```bash
+GITHUB_APP_ID=123456
+GITHUB_APP_PRIVATE_KEY_PATH=/app/ssl/github-private-key.pem
+GITHUB_WEBHOOK_SECRET=your-webhook-secret
+```
+
+## AWS Infrastructure (Optional)
+
+If you want to deploy the supporting infrastructure on AWS, use the Terraform configuration:
+
+```bash
+cd docker/terraform
+
+# Initialize Terraform
+terraform init
+
+# Plan the deployment
+terraform plan
+
+# Apply the infrastructure
+terraform apply
+```
+
+This will create:
+- VPC and networking components
+- EC2 instance for Docker Compose
+- RDS PostgreSQL database
+- ElastiCache Redis cluster
+- Application Load Balancer
+- Security groups and IAM roles
+
+## Maintenance
+
+### Updating Greptile
+
+To update to a new version:
+
+```bash
+# Pull the latest images
+docker-compose pull
+
+# Restart services
+docker-compose down
+docker-compose up -d
+
+# Check update status
+docker-compose logs -f
+```
+
+### Backup and Recovery
+
+Regular backups are essential:
+
+```bash
+# Database backup
+docker-compose exec postgres pg_dump -U greptile_user greptile > backup.sql
+
+# Redis backup (if using persistence)
+docker-compose exec redis redis-cli BGSAVE
+
+# Application data backup
+docker-compose exec greptile-api greptile-cli backup:create
+```
+
+### Monitoring
+
+Monitor your deployment:
+
+```bash
+# Service health
+docker-compose ps
+
+# Resource usage
+docker stats
+
+# Application logs
+docker-compose logs -f --tail=100
+
+# Database status
+docker-compose exec postgres psql -U greptile_user -d greptile -c "\l"
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Services won't start**
+```bash
+# Check Docker daemon
+sudo systemctl status docker
+
+# Check compose file syntax
+docker-compose config
+
+# View detailed logs
+docker-compose logs service-name
+```
+
+**Database connection errors**
+```bash
+# Test database connectivity
+docker-compose exec greptile-api nc -zv postgres-host 5432
+
+# Check database logs
+docker-compose logs postgres
+```
+
+**SSL certificate issues**
+```bash
+# Verify certificate files
+openssl x509 -in ssl/certificate.pem -text -noout
+
+# Check certificate expiration
+openssl x509 -in ssl/certificate.pem -noout -dates
+```
+
+### Performance Tuning
+
+Optimize for your environment:
+
+```yaml
+# docker-compose.override.yml
+version: '3.8'
+services:
+  greptile-api:
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: '2.0'
+    environment:
+      - WORKER_PROCESSES=4
+      - MAX_CONNECTIONS=1000
+
+  postgres:
+    environment:
+      - POSTGRES_SHARED_BUFFERS=256MB
+      - POSTGRES_EFFECTIVE_CACHE_SIZE=1GB
+```
+
+## Support
+
+For deployment issues:
+1. Check the [akupara repository issues](https://github.com/greptileai/akupara/issues)
+2. Review the application logs
+3. Contact support with your deployment configuration
+
+<Note>
+Keep your `.env` file secure and never commit sensitive credentials to version control.
+</Note> 
