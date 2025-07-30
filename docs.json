@@ -16,6 +16,7 @@
             "group": "User Manual",
             "pages": [
               "introduction",
+              "developer-quick-reference",
               "code-review-bot/getting-started",
               "code-review-bot/key-features",
               "code-review-bot/trigger-code-review",
@@ -44,10 +45,7 @@
           },
           {
             "group": "Security",
-            "pages": [
-              "security/sso",
-              "security/selfhost"
-            ]
+            "pages": ["security/sso", "security/selfhost"]
           },
           {
             "group": "API Reference",
@@ -87,9 +85,7 @@
     "dark": "/logo.svg"
   },
   "api": {
-    "openapi": [
-      "openapi.yml"
-    ]
+    "openapi": ["openapi.yml"]
   },
   "navbar": {
     "links": [
