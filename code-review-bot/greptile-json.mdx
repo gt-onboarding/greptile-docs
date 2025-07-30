@@ -1,66 +1,50 @@
 ---
 title: Configure with greptile.json
-description: 'Configure Greptile settings and patterns per repository'
-keywords: 'AI code reviews, codebase analysis, natural language queries, GitHub integration, Slack integration, PR review bot'
-metaTitle: 'Greptile Docs: Repository-Level Configuration with greptile.json'
-metaDescription: 'Learn how to customize Greptile settings and patterns for individual repositories using greptile.json configuration.'
+description: "Configure Greptile settings and patterns per repository"
+keywords: "AI code reviews, codebase analysis, natural language queries, GitHub integration, Slack integration, PR review bot"
+metaTitle: "Greptile Docs: Repository-Level Configuration with greptile.json"
+metaDescription: "Learn how to customize Greptile settings and patterns for individual repositories using greptile.json configuration."
 ---
 
-You can have custom settings at the repo level by adding a `greptile.json` file to the root of the repo in your default branch. 
+You can have custom settings at the repo level by adding a `greptile.json` file to the root of the repo in your default branch.
 
 You can grab your global settings in the correct format [here](https://app.greptile.com/review/github?tab=config) by clicking on the `copy` or `download` icons on the top right of the Settings panel. 
 
 <Note>
-  The `ignorePatterns` field follows `.gitignore` [syntax](https://git-scm.com/docs/gitignore).
+  The `ignorePatterns` field follows `.gitignore`
+  [syntax](https://git-scm.com/docs/gitignore).
 </Note>
 
 ```json greptile.json
 {
-  "labels": [
-    "feature",
-    "bug"
-  ],
+  "labels": ["feature", "bug"],
   "comment": "Disclaimer: This is AI-generated.",
-  "commentTypes": [
-    "logic",
-    "syntax"
-  ],
+  "commentTypes": ["logic", "syntax"],
   "instructions": "Ensure style_guide.md is enforced.",
   "ignoreKeywords": "rename\nlinter\nprettier\ngreptile-ignor",
   "ignorePatterns": "testing/**/*.py\n*.md\n*.txt\n*.json",
   "patternRepositories": ["acme/backend"],
   "triggerOnUpdates": true,
   "shouldUpdateDescription": false,
-  "disabledLabels": [
-    "docs"
-  ],
-  "includeAuthors": [
-    "dakshgup",
-    "schoi"
-  ],
-  "excludeAuthors": [
-    "cool-dev"
-  ]
+  "disabledLabels": ["docs"],
+  "includeAuthors": ["dakshgup", "schoi"],
+  "excludeAuthors": ["cool-dev"]
 }
 ```
 
-
 ### Configuration Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `labels` | array | Labels that will trigger a Greptile review when added to a PR. In the example above, adding "feature" or "bug" label will trigger a review. |
-| `comment` | string | A disclaimer or prefix that will be added to every Greptile PR summary. Useful for compliance requirements. |
-| `commentTypes` | array | Types of comments Greptile should make. Options include: "logic", "syntax", "style", "info", "advice", "checks", and "notes". |
-| `instructions` | string | Natural language custom instructions for Greptile to follow when reviewing code. Can reference files in your repo or contain specific rules. |
-| `ignoreKeywords` | string | Newline-separated list of keywords. PRs with these keywords in their title or description will be ignored. |
-| `ignorePatterns` | string | Newline-separated list of file patterns to ignore, following .gitignore syntax. Files matching these patterns will not be reviewed. |
-| `patternRepositories` | array | List of repositories to learn patterns from. Greptile will analyze these repos to understand your codebase's patterns. |
-| `triggerOnUpdates` | boolean | If true, Greptile will review code every time a PR is updated with a new commit. |
-| `shouldUpdateDescription` | boolean | If true, Greptile will update the PR description with a summary of changes. If false, only comments on code. |
-| `disabledLabels` | array | PRs with these labels will not be reviewed by Greptile, even if other trigger conditions are met. |
-| `includeAuthors` | array | Only PRs from these authors will be reviewed. If empty, reviews PRs from all authors (except excluded ones). |
-| `excludeAuthors` | array | PRs from these authors will not be reviewed, even if other trigger conditions are met. |
-
-
-
+| Parameter                 | Type    | Description                                                                                                                                  |
+| ------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `labels`                  | array   | Labels that will trigger a Greptile review when added to a PR. In the example above, adding "feature" or "bug" label will trigger a review.  |
+| `comment`                 | string  | A disclaimer or prefix that will be added to every Greptile PR summary. Useful for compliance requirements.                                  |
+| `commentTypes`            | array   | Types of comments Greptile should make. Options include: "logic", "syntax", "style", and "info".                                             |
+| `instructions`            | string  | Natural language custom instructions for Greptile to follow when reviewing code. Can reference files in your repo or contain specific rules. |
+| `ignoreKeywords`          | string  | Newline-separated list of keywords. PRs with these keywords in their title or description will be ignored.                                   |
+| `ignorePatterns`          | string  | Newline-separated list of file patterns to ignore, following .gitignore syntax. Files matching these patterns will not be reviewed.          |
+| `patternRepositories`     | array   | List of repositories to learn patterns from. Greptile will analyze these repos to understand your codebase's patterns.                       |
+| `triggerOnUpdates`        | boolean | If true, Greptile will review code every time a PR is updated with a new commit.                                                             |
+| `shouldUpdateDescription` | boolean | If true, Greptile will update the PR description with a summary of changes. If false, only comments on code.                                 |
+| `disabledLabels`          | array   | PRs with these labels will not be reviewed by Greptile, even if other trigger conditions are met.                                            |
+| `includeAuthors`          | array   | Only PRs from these authors will be reviewed. If empty, reviews PRs from all authors (except excluded ones).                                 |
+| `excludeAuthors`          | array   | PRs from these authors will not be reviewed, even if other trigger conditions are met.                                                       |
