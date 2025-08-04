@@ -19,6 +19,7 @@
               "developer-quick-reference",
               "code-review-bot/getting-started",
               "code-review-bot/key-features",
+              "code-review-bot/best-practices",
               "code-review-bot/trigger-code-review",
               "code-review-bot/custom-context",
               "code-review-bot/greptile-json",

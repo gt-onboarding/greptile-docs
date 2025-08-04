@@ -1,0 +1,379 @@
+---
+title: Best Practices
+description: 'Expert tips and best practices for maximizing the value of Greptile code reviews'
+keywords: 'best practices, configuration, feedback, learning, custom context, team optimization'
+metaTitle: 'Greptile Best Practices: Optimize AI Code Reviews for Your Team'
+metaDescription: 'Learn expert tips and best practices for configuring and using Greptile AI code reviews to maximize value for your development team.'
+---
+
+This guide covers proven strategies for getting the most value from Greptile based on real-world team experiences. For a quick overview of capabilities, see the [developer quick reference](/developer-quick-reference).
+
+## Configuration Options You Should Know
+
+Get started with the [getting started guide](/code-review-bot/getting-started) if you haven't set up Greptile yet.
+
+### Dashboard Configuration
+
+Learn more about all available settings in the [key features](/code-review-bot/key-features) guide.
+
+#### Adjust how many comments Greptile makes
+
+The severity threshold is your primary tool for controlling how many comments Greptile makes:
+
+<CardGroup cols={3}>
+  <Card title="Low Threshold">
+    **More comments, more detail**
+    - Comments on potential issues
+    - Includes minor suggestions
+    - Good for teams that value detailed feedback
+  </Card>
+  <Card title="Medium Threshold">
+    **Balanced approach (default)**
+    - Mix of minor and major issues
+    - Filters out most nitpicks
+    - Recommended starting point
+  </Card>
+  <Card title="High Threshold">
+    **Critical issues only**
+    - Fewer, high-impact comments
+    - Focuses on bugs and security
+    - Good for teams that find the bot too noisy
+  </Card>
+</CardGroup>
+
+<Tip>
+Start with medium threshold and adjust based on your team's feedback. If you're getting too much noise, increase it. If you want more detail, decrease it.
+</Tip>
+
+#### Adjust what types of comments Greptile makes
+
+You can control which types of issues Greptile comments on:
+
+- **Syntax**: Basic code structure and formatting
+- **Logic**: Potential bugs and logical issues
+- **Style**: Coding conventions and best practices
+
+<Note>
+Many teams disable syntax comments if they already use a linter, letting Greptile focus on logic and style issues that automated tools miss.
+</Note>
+
+## Help Greptile Learn About Your Codebase and Patterns
+
+Learn more about how Greptile learns in the [memory and learning](/how-greptile-works/memory-and-learning) guide.
+
+### Effective Comment Interaction
+
+<Steps>
+  <Step title="React to Comments">
+    Use 👍 for helpful comments and 👎 for unhelpful ones. This is the primary way Greptile learns your preferences.
+  </Step>
+  <Step title="Explain Your Feedback">
+    When downvoting, reply explaining why: `@greptileai Actually, we prefer list comprehensions because they're more readable`
+  </Step>
+  <Step title="Ask Questions">
+    Tag `@greptileai` to ask for clarification: `@greptileai Can you explain why this is a security issue?`
+  </Step>
+  <Step title="Be Consistent">
+    Regular, consistent feedback across team members helps Greptile learn faster.
+  </Step>
+</Steps>
+
+### Learning timeline
+
+<Info>
+**2-3 weeks** of consistent feedback typically shows noticeable improvement in comment relevance and accuracy.
+</Info>
+
+Early weeks may have more noise as Greptile learns your team's preferences. The system gets better at:
+- Filtering suggestions to what your team values
+- Understanding your codebase context
+- Recognizing your team's coding patterns
+
+### What does Greptile learn from?
+
+- Your reactions to its comments
+- Other developers' comments on PRs
+- Which suggestions get implemented vs ignored
+- Team discussions about code patterns
+
+## Managing Custom Context
+
+### Types of Custom Context
+
+See the full [custom context guide](/code-review-bot/custom-context) for detailed instructions.
+
+<CardGroup cols={3}>
+  <Card title="Rules" icon="gavel">
+    **Team Preferences**
+    - Enforce coding standards
+    - Specify preferred patterns
+    - Set architectural guidelines
+  </Card>
+  <Card title="Files" icon="book">
+    **Documentation**
+    - Style guides
+    - Architecture docs
+    - API standards
+  </Card>
+  <Card title="Other" icon="info">
+    **Additional Info**
+    - Project context
+    - Domain knowledge
+    - Special requirements
+  </Card>
+</CardGroup>
+
+### Effective Context Rules
+
+<Tabs>
+  <Tab title="Good Examples">
+    ```
+    "Use async/await instead of Promise chains for better readability"
+
+    "All API endpoints must validate input parameters"
+
+    "Prefer functional components over class components in React"
+
+    "Database queries should use prepared statements"
+    ```
+  </Tab>
+  <Tab title="Scoping Rules">
+    Apply rules to specific contexts:
+    - Specific repositories
+    - File types (e.g., only `.py` files)
+    - Directory paths (e.g., `src/backend/**`)
+    - Multiple scopes per rule
+  </Tab>
+</Tabs>
+
+### Context File Best Practices
+
+Point Greptile to your existing documentation:
+- **Style guides**: Language-specific coding standards
+- **Architecture docs**: System design and patterns
+- **Security policies**: Compliance and security requirements
+- **API standards**: Consistent API design patterns
+- **Testing strategies**: How your team approaches testing
+
+<Warning>
+Review learned rules regularly. Greptile automatically creates rules based on team comments, but you should verify they align with your actual preferences.
+</Warning>
+
+## Advanced Configuration
+
+### Repository-Level Settings
+
+Use `greptile.json` in your repository root for per-repo configuration. Learn more in the [greptile.json guide](/code-review-bot/greptile-json):
+
+```json
+{
+  "strictness": "medium",
+  "commentTypes": ["logic", "style"],
+  "patternsRepo": ["org/frontend-repo"],
+  "customInstructions": "Focus on security and performance",
+  "scope": {
+    "include": ["src/**"],
+    "exclude": ["tests/**", "docs/**"]
+  }
+}
+```
+
+### Analytics Monitoring
+
+Track these key metrics in your dashboard:
+- **Average time to merge**: Are reviews helping or slowing down merges?
+- **Comment engagement**: High upvote rates indicate valuable feedback
+- **Addressed comments per MR**: Shows team adoption and value
+
+### Integration Optimization
+
+<AccordionGroup>
+  <Accordion title="Trigger Configuration">
+    Set up smart triggers based on:
+    - Specific authors (new team members)
+    - Branch patterns (feature branches)
+    - PR labels (needs-review)
+    - File types (critical system files)
+  </Accordion>
+  <Accordion title="Pattern Repositories">
+    Link related repositories for better context:
+    - Add frontend repo to backend reviews
+    - Include shared library repositories
+    - Cross-reference microservice dependencies
+  </Accordion>
+</AccordionGroup>
+
+## Team Adoption Strategies
+
+### For New Teams
+
+<Steps>
+  <Step title="Start Conservative">
+    Begin with high severity threshold to build confidence with fewer, high-quality comments.
+  </Step>
+  <Step title="Encourage Engagement">
+    Train team members on upvoting/downvoting and asking questions.
+  </Step>
+  <Step title="Iterate Based on Feedback">
+    Adjust settings weekly based on team feedback and analytics.
+  </Step>
+  <Step title="Add Context Gradually">
+    Start with key style guides, then add more context as the team sees value.
+  </Step>
+</Steps>
+
+### Getting Support
+
+<CardGroup cols={2}>
+  <Card title="Documentation" icon="book-open">
+    Use the docs assistant for specific questions about configuration and usage.
+  </Card>
+  <Card title="Community Support" icon="users">
+    Join team-specific Slack channels for real-time help and best practice sharing.
+  </Card>
+</CardGroup>
+
+## Common Pitfalls to Avoid
+
+<Warning>
+**Don't ignore the learning period.** Greptile needs 2-3 weeks of consistent feedback to understand your team's preferences.
+</Warning>
+
+<Warning>
+**Don't set severity too low initially.** Start conservative and lower the threshold once the team is comfortable with the feedback quality.
+</Warning>
+
+<Warning>
+**Don't forget to scope custom rules.** Broad rules applied everywhere can create noise in inappropriate contexts.
+</Warning>
+
+<Info>
+Remember: Greptile learns continuously. Regular engagement and feedback make it more valuable over time.
+</Info>
+
+## Troubleshooting & FAQ
+
+### Common Issues
+
+<AccordionGroup>
+  <Accordion title="Greptile isn't reviewing my PR">
+    **Possible causes:**
+    - Your PR doesn't match configured trigger rules (labels, authors, branches)
+    - Changes are in excluded files or directories
+    - Repository indexing is still in progress (check for "updating" tag in dashboard)
+
+    **Solutions:**
+    - Try manual trigger: comment `@greptileai` on the PR (see [manual triggers](/code-review-bot/trigger-code-review))
+    - Check your team's trigger configuration in dashboard settings
+    - Verify the repository is properly connected and indexed
+  </Accordion>
+
+  <Accordion title="Getting too many irrelevant comments">
+    **Solutions:**
+    - Increase severity threshold in dashboard settings (move from Low → Medium → High)
+    - Disable comment types you don't need (syntax if you use a linter)
+    - Downvote irrelevant comments consistently to help Greptile learn
+    - Add custom rules to clarify your team's preferences (see [custom context](/code-review-bot/custom-context))
+  </Accordion>
+
+  <Accordion title="Comments aren't helpful or accurate">
+    **This is normal in the first 2-3 weeks.** Greptile needs feedback to learn your preferences.
+
+    **Solutions:**
+    - Consistently upvote helpful comments, downvote unhelpful ones
+    - Reply to explain why comments are wrong: `@greptileai Actually, this pattern is preferred in our codebase because...`
+    - Add custom context about your team's standards and architectural decisions (see [custom context](/code-review-bot/custom-context))
+    - Be patient - learning takes time but improves significantly
+  </Accordion>
+
+  <Accordion title="Repository indexing is taking too long">
+    **This is normal for large codebases.** Initial indexing is compute-intensive and can take several hours.
+
+    **What to expect:**
+    - Large repositories (100k+ lines): Several hours for initial index
+    - Subsequent updates: Much faster, only processes new changes
+    - You'll see "updating" tag in dashboard while indexing is in progress
+
+    **If it's stuck:** Contact support with your repository details
+  </Accordion>
+
+  <Accordion title="Greptile stopped working after recent changes">
+    **Check these common causes:**
+    - Repository permissions or access tokens may have expired
+    - Trigger rules may have been updated to exclude your PRs
+    - Repository may have been disconnected accidentally
+
+    **Solutions:**
+    - Check repository connection status in dashboard
+    - Verify trigger rules still match your workflow
+    - Try manual trigger to test if Greptile responds (see [manual triggers](/code-review-bot/trigger-code-review))
+  </Accordion>
+</AccordionGroup>
+
+### Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="How long does it take for Greptile to learn our preferences?">
+    **2-3 weeks** with consistent feedback from multiple team members. You'll notice:
+    - Week 1: High noise as Greptile learns basic patterns
+    - Week 2-3: Significant improvement in comment relevance
+    - Month 2+: Highly tuned to your team's specific preferences
+  </Accordion>
+
+  <Accordion title="Can I use Greptile on old PRs or closed PRs?">
+    **Yes!** You can manually trigger reviews on any PR by commenting `@greptileai` (see [manual triggers](/code-review-bot/trigger-code-review)). This works on:
+    - Old PRs from before Greptile was enabled
+    - Closed or merged PRs (for learning purposes)
+    - Draft PRs that don't normally trigger automatic reviews
+  </Accordion>
+
+  <Accordion title="How does Greptile handle large PRs or complex changes?">
+    Greptile analyzes the entire changeset and provides:
+    - Summary of overall changes in natural language
+    - Sequence diagrams for complex changes
+    - Lower confidence scores for large, risky changes
+    - Context-aware comments that understand cross-file dependencies
+  </Accordion>
+
+  <Accordion title="What happens if I disagree with a Greptile comment?">
+    **You should engage with it:**
+    - Downvote the comment so Greptile learns
+    - Reply explaining why: `@greptileai This pattern is actually preferred because...`
+    - Ask for alternatives: `@greptileai What's another way to handle this?`
+    - Greptile will learn from your feedback and adjust future comments
+  </Accordion>
+
+  <Accordion title="Can I configure different settings for different repositories?">
+    **Yes!** You have multiple options:
+    - Dashboard settings apply to all repositories in your team
+    - `greptile.json` files in repository roots can override dashboard settings (see [greptile.json guide](/code-review-bot/greptile-json))
+    - Custom context can be scoped to specific repositories or file types (see [custom context](/code-review-bot/custom-context))
+    - Different teams in your organization can have completely different configurations
+  </Accordion>
+
+  <Accordion title="How do I know if my custom context is being used?">
+    Check the custom context dashboard (learn more about [custom context](/code-review-bot/custom-context)):
+    - "Last Applied" column shows when each context item was used
+    - Click on any context item to see usage statistics
+    - "Recent Usage" section shows specific comments where the context was applied
+  </Accordion>
+
+  <Accordion title="What should I do if Greptile suggests a security issue?">
+    **Take it seriously:**
+    - Even if you disagree, consider the suggestion carefully
+    - Ask for clarification: `@greptileai Can you explain the security risk here?`
+    - Research the potential vulnerability independently
+    - If it's a false positive, downvote and explain why to help Greptile learn
+  </Accordion>
+</AccordionGroup>
+
+### Getting Help
+
+<CardGroup cols={2}>
+  <Card title="Team Slack Channel" icon="slack">
+    Join your organization's dedicated Greptile Slack channel for real-time support and team discussions.
+  </Card>
+  <Card title="Documentation Assistant" icon="robot">
+    Use the docs assistant (star icon) for specific configuration questions and setup guidance.
+  </Card>
+</CardGroup>
