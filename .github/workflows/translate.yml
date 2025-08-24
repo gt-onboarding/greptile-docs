@@ -25,3 +25,4 @@ jobs:
           config: 'gt.config.json'
           inline: false
           pr_branch: 'gt-translate/${{ github.ref_name }}'
+          pr_auto_merge: true
